@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,9 +66,17 @@
 		font-size: 13px;
 		float: left;
 		background-size: 100% 100%;
+		margin-left: 300px;
+	}
+#MAP #VIEW2{
+		background: url(http://itvplus5.cafe24.com/img/map/map.png);
+		width: 320px;
+		height: 420px;
+		font-size: 13px;
+		float: left;
+		background-size: 100% 100%;
 		margin-left: 16px;
 	}
-
 	#MAP #VIEW span{
 		color: #939393;
 		font-family: NanumGothic;
@@ -76,6 +85,7 @@
 		position: absolute;
 		font-weight:bold;
 		font-size:14px;
+
 	}
 
 	#MAP #VIEW span em{
@@ -164,7 +174,9 @@
 	}
 </style>
 <script type="text/javascript">
+
 $(function(){   
+	$("#mycontext").hide();
 	var froms = "서울특별시";
 	var fors = "강남구";
 	var area = [
@@ -201,8 +213,9 @@ $(function(){
 	$("#VIEW .from").removeClass("select");
 	$("#VIEW .from[from='서울특별시']").addClass("select");
 	
-	
+		
 	$("#VIEW .from").on("click",function(){
+		$("#mycontext").show();
 		$("#VIEW .from").removeClass("select");
 		$(this).addClass("select");
 		froms = $(this).attr("from");
@@ -226,6 +239,7 @@ $(function(){
 		<div id="MAP_title"><em id="icon"></em><span style="color:#DF1E37;font-family: NanumGothicB;">지역별</span> 맛집찾기<span id="submsg">  지도에서 지역을 선택한 후 상세지역명을 선택해주세요.</span></div>
 
 		<div id="VIEW">
+
 			<span from="제주특별자치도" class="from" style="margin: 376px 0px 0px 47px;">제주</span>
 			<span from="전라남도" class="from" style="margin: 289px 0px 0px 72px;">전남</span>
 			<span from="부산광역시" class="from" style="margin: 272px 0px 0px 240px;">부산</span>
@@ -245,7 +259,7 @@ $(function(){
 			<span from="서울특별시" class="from select" style="margin: 58px 0px 0px 89px;">서울</span>
 		</div>
 
-		<div>
+		<div id="mycontext">
 			<div id="context_title"><span id="from">서울특별시</span> 맛집찾기</div>
 			<div id="context">
 			</div>
