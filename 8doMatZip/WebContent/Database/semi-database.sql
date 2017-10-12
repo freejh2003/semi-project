@@ -58,13 +58,13 @@ create table post(
 )
 
 create table comment(
+	comno varchar2(100) primary key,
 	pno varchar2(100) not null,
 	mid varchar2(100) not null,
 	comcontent clob not null,
 	comdate date not null,
 	constraint fk_com_member foreign key(mid) references member(mid),
 	constraint fk_com_post foreign key(pno) references post(pno),
-	constraint pk_com_post primary key (pno)
 )
 
 create table request(
@@ -104,6 +104,7 @@ create table imagepath(
 create table QNA(
 	mid varchar2(100) not null,
 	answer varchar2(100) not null,
+	question varchar2(100) not null,
 	constraint fk_qna_member foreign key(mid) references member(mid),
 	constraint pk_qna_member primary key (mid, answer)
 )
