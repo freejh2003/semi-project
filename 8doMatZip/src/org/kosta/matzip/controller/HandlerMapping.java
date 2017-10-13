@@ -18,6 +18,10 @@ public class HandlerMapping {
 			c=new MemberRegisterController();
 		}else if(command.equals("mregisterview")){
 			c=new MemberRegisterViewController();
+		}else if(command.equals("mupdate")){
+			c=new MemberUpdateController();
+		}else if(command.equals("mleave")){
+			c=new MemberLeaveController();
 		}
 		return c;
 	}

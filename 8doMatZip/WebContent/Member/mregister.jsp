@@ -20,10 +20,17 @@
 				<td><input type="password" name="password" required="required"></td>
 			</tr>
 			<tr>
+				<td>Address</td>
+				<td><input type="text" name="name" required="required"></td>
+			</tr>
+			<tr>
+				<td>Tel</td>
+				<td><input type="text" name="name" required="required"></td>
+			</tr>
+			<tr>
 				<td>Name</td>
 				<td><input type="text" name="name" required="required"></td>
 			</tr>
-			
 			<tr>
 				<td colspan="2"><input type="submit" value="가입"></td>
 			</tr>
