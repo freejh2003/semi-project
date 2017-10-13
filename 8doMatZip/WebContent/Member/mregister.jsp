@@ -36,7 +36,7 @@
 			</tr>
 			</tbody>
 		</table>
-		<input type="hidden" name="command" value="register">
+		<input type="hidden" name="command" value="mregister">
 	</form>
 	<br>
 	<a href="index.jsp">Home</a>

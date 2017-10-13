@@ -63,5 +63,59 @@ public class MemberDAO {
 			closeAll(rs, pstmt,con);
 		}
 		return vo;
-	}
-}
+	}// login
+	public MemberVO FindMemberById(String mid) throws SQLException {
+		ResultSet rs=null;
+		PreparedStatement pstmt=null;
+		Connection con=null;
+		MemberVO mvo=new MemberVO();
+		try {
+			con=getConnection();
+			String sql="select mpassword,ano,mname,maddress,mtel from member where mid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				mvo=new MemberVO(mid,rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5));
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return mvo;
+	}//findbyid
+	public void memberUpdate(MemberVO umvo) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection();
+			String sql=
+					"update member set mpassword=?, mname=?, maddress=?, mtel=? where mid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, umvo.getMpassword());
+			pstmt.setString(2, umvo.getMname());
+			pstmt.setString(3, umvo.getMaddress());
+			pstmt.setString(4, umvo.getMtel());
+			pstmt.setString(5, umvo.getMid());
+			pstmt.executeUpdate();
+		}finally{
+			closeAll(rs, pstmt,con);
+		}
+	}// update
+	public void memberLeave(String mid) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection();
+			String sql=
+					"delete from member where mid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.executeUpdate();
+		}finally{
+			closeAll(rs, pstmt,con);
+		}
+	}//delete
+	
+}//class

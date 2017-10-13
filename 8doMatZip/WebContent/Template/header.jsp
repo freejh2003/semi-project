@@ -21,7 +21,8 @@
  <c:when test="${sessionScope.mvo!=null}">
  	${sessionScope.mvo.mname} 님 로그인 <br>
  		<form name="BForm">
-		<a href="DispatcherServlet?command=logout"  onclick="return recheck()">로그아웃</a>
+		<a href="DispatcherServlet?command=logout"  onclick="return recheck()">로그아웃</a> &nbsp;
+		<a href="DispatcherServlet?command=mupdateview&mid=${sessionScope.mvo.mid}">마이페이지</a>
  		</form>
 		<br>
  </c:when>
@@ -46,6 +47,7 @@
 		
 		</tr>
 	</table>
+	<a href="DispatcherServlet?command=lostpassword" >아이디까먹음?</a>
 </form>
  </c:otherwise>
  </c:choose>

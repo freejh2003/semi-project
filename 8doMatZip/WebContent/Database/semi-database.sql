@@ -29,6 +29,7 @@ create table member(
 )
 insert into member(mid,ano,mpassword,mname,maddress,mtel)values('master','2','master','master','master','master');
 insert into member(mid,ano,mpassword,mname,maddress,mtel)values('aaaaa','1','aaaaa','공유','강남','010-0000-0000');
+delete from member where mid='aaaaa';
 select * from member;
 
 create table post(
@@ -46,6 +47,7 @@ create table post(
 )
 insert into post(pno,mid,ptitle,pcontent,pstar,pdate,phit,plike,locno)
 values(pno_seq.nextval,'aaaaa','강동구에서 제일 맛있는 초밥집-원숭이초밥','회가 신선해요',4,sysdate,3,50,1);
+delete from post where mid='aaaaa';
 
 create table comments(
 	comno varchar2(100) primary key,
@@ -90,6 +92,7 @@ create table imagepath(
 create table QNA(
 	mid varchar2(100) not null,
 	answer varchar2(100) not null,
+	
 	constraint fk_qna_member foreign key(mid) references member(mid),
 	constraint pk_qna_member primary key (mid, answer)
 )

@@ -20,8 +20,12 @@ public class HandlerMapping {
 			c=new MemberRegisterViewController();
 		}else if(command.equals("mupdate")){
 			c=new MemberUpdateController();
+		}else if(command.equals("mupdateview")){
+			c=new MemberUpdateViewController();
 		}else if(command.equals("mleave")){
 			c=new MemberLeaveController();
+		}else if(command.equals("lostpassword")){
+			c=new MemberPasswordLostController();
 		}
 		return c;
 	}
