@@ -25,7 +25,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-10 main">
-				 <jsp:include page="cityTest.jsp" />
+				 <jsp:include page="${requestScope.url}" />
 			</div>
 				<div class="col-sm-2">
 

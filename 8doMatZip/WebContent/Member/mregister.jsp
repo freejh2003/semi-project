@@ -23,12 +23,7 @@
 				<td>Name</td>
 				<td><input type="text" name="name" required="required"></td>
 			</tr>
-			<tr>
-				<td>Hobby</td>
-				<td><c:forEach items="${requestScope.hlist }" var="hob">
-						<input type="checkbox" name="hobby" value="${hob.id }">${hob.name}<br>
-					</c:forEach></td>
-			</tr>
+			
 			<tr>
 				<td colspan="2"><input type="submit" value="가입"></td>
 			</tr>

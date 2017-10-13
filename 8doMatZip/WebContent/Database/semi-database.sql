@@ -7,6 +7,11 @@ drop table location;
 create sequence locno_seq;
 drop sequence locno_seq;
 
+create sequence pno_seq;
+create sequence com_seq;
+create sequence req_seq;
+
+
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'제주특별자치도','서귀포시');
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'제주특별자치도','제주시');
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'서울특별시','강동구');
@@ -22,6 +27,7 @@ create table member(
 	constraint fk_member_auth foreign key(ano) references authority(ano)
 )
 insert into member(mid,ano,mpassword,mname,maddress,mtel)values('master','2','master','master','master','master');
+insert into member(mid,ano,mpassword,mname,maddress,mtel)values('aaaaa','1','aaaaa','공유','강남','010-0000-0000');
 select * from member;
 drop table member;
 
@@ -40,6 +46,8 @@ create table post(
 	constraint fk_post_member foreign key(mid) references member(mid),
 	constraint fk_post_location foreign key(locno) references location(locno)
 )
+insert into post(pno,mid,ptitle,pcontent,pdate,phit,plike,pstar,locno)
+values(pno_seq.nextval,'aaaaa','강동구에서 제일 맛있는 초밥집-원숭이초밥','회가 신선해요',sysdate,3,50,4,1);
 
 create table comments(
 	comno varchar2(100) primary key,
@@ -73,6 +81,7 @@ create table authority(
 )
 insert into authority(ano,atype) values('1','회원');
 insert into authority(ano,atype) values('2','관리자');
+
 create table imagepath(
 	pno varchar2(100) not null,
 	ipath varchar2(100) not null,

@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-임시 index 페이지 입니다.
+<jsp:forward page="DispatcherServlet">
+	<jsp:param value="mainlist" name="command"/>
+</jsp:forward>
 </body>
 </html>

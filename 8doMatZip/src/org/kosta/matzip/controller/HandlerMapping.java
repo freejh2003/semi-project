@@ -16,6 +16,8 @@ public class HandlerMapping {
 			c=new LogoutController();
 		}else if(command.equals("mregister")){
 			c=new MemberRegisterController();
+		}else if(command.equals("mregisterview")){
+			c=new MemberRegisterViewController();
 		}
 		return c;
 	}
