@@ -16,18 +16,27 @@
 		}
 		return false;
 	}
+	$(document).ready(function() {
+		$("#loginform :submit[value=로그인]").click(function() {
+			$("#hiddenvalue").val("login");
+		})
+		$("#loginform :submit[value=회원가입]").click(function() {
+			$("#hiddenvalue").val("mregister");
+		})
+		
+	})
   </script>
  <c:choose>
  <c:when test="${sessionScope.mvo!=null}">
- 	${sessionScope.mvo.name} 님 로그인 <br>
+ 	${sessionScope.mvo.mname} 님 로그인 <br>
  		<form name="BForm">
 		<a href="DispatcherServlet?command=logout" onclick="return recheck()">로그아웃</a>
  		</form>
 		<br>
  </c:when>
  <c:otherwise>
- <form method="post" action="DispatcherServlet">
- <input type="hidden" name="command" value="login">
+ <form id="loginform" method="post" action="DispatcherServlet" name="loginform">
+ <input id="hiddenvalue" type="hidden" name="command" value="">
 	<table class="table table-bordered table-hover">
 		<tr>
 			<td>아이디</td>
@@ -38,8 +47,12 @@
 			<td><input type="text" name="password" size="6" class="form-control"></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right"><input type="submit" value="로그인" class="btn btn-default">
+			<td colspan="2" align="right">
+				<input type="button" value="로그인" class="btn btn-default"> &nbsp;
+				<input type="button" value="회원가입" class="btn btn-default">
 			</td>
+		
+		
 		</tr>
 	</table>
 </form>

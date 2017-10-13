@@ -24,7 +24,7 @@ create table member(
 insert into member(mid,ano,mpassword,mname,maddress,mtel)values('master','2','master','master','master','master');
 select * from member;
 drop table member;
-drop table board;
+
 
 select * from member;
 create table post(

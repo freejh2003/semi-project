@@ -43,8 +43,25 @@ public class MemberDAO {
 			}
 		closeAll(pstmt,con);
 	}
-	public MemberVO login(String id, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberVO login(String mid, String mpassword) throws SQLException {
+		MemberVO vo=null;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection();
+			String sql=
+					"select ano,mname,maddress,mtel from member where mid=? and mpassword=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, mpassword);
+			rs=pstmt.executeQuery();
+			if(rs.next()){
+				vo=new MemberVO(mid,rs.getString(1),mpassword,rs.getString(2),rs.getString(3),rs.getString(4));
+			}
+		}finally{
+			closeAll(rs, pstmt,con);
+		}
+		return vo;
 	}
 }

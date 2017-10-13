@@ -11,9 +11,9 @@ public class LoginController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String id=request.getParameter("id");
-		String password=request.getParameter("password");
-		MemberVO vo=MemberDAO.getInstance().login(id, password);
+		String mid=request.getParameter("id");
+		String mpassword=request.getParameter("password");
+		MemberVO vo=MemberDAO.getInstance().login(mid, mpassword);
 		String path=null;
 		if(vo==null){
 			path="redirect:Member/login_fail.jsp";

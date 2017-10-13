@@ -12,7 +12,7 @@ public class LogoutController implements Controller {
 		HttpSession session=request.getSession(false);
 		if(session!=null)
 			session.invalidate();
-		return "redirect:DispatcherServlet?command=maillist";
+		return "redirect:DispatcherServlet?command=mainlist";
 	}
 
 }

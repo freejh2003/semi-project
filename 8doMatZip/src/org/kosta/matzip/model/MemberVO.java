@@ -22,6 +22,16 @@ public class MemberVO {
 		this.mpassword = mpassword;
 	}
 	
+	public MemberVO(String mid, String ano, String mpassword, String mname, String maddress, String mtel) {
+		super();
+		this.mid = mid;
+		this.ano = ano;
+		this.mpassword = mpassword;
+		this.mname = mname;
+		this.maddress = maddress;
+		this.mtel = mtel;
+	}
+
 	public MemberVO(String mid, String ano, String mpassword, String mname, String maddress, String mtel,
 			RecentBean recentbean, ArrayList<PostVO> myFavList) {
 		super();
