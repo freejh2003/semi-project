@@ -12,6 +12,8 @@ public class HandlerMapping {
 			c=new MainListController();
 		}else if(command.equals("login")){
 			c=new LoginController();
+		}else if(command.equals("logout")){
+			c=new LogoutController();
 		}
 		return c;
 	}
