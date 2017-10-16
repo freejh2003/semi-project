@@ -80,7 +80,7 @@ public class PostDAO {
 			closeAll(rs,pstmt,con);
 		}
 		return plist;
-	}
+	}//getallpostlist
 	public ArrayList<PostVO> PostSortByLocation(String loc,String sigungu) throws SQLException{
 		ArrayList<PostVO> sortlist = new ArrayList<PostVO>();
 		Connection con=null;
@@ -117,7 +117,7 @@ public class PostDAO {
 			closeAll(rs,pstmt,con);
 		}
 		return sortlist;
-	}
+	}//postbylocation
 	public String findLocNo(String loc,String sigungu) throws SQLException {
 		String locno=null;
 		Connection con=null;
@@ -141,7 +141,7 @@ public class PostDAO {
 			closeAll(rs,pstmt,con);
 		}
 		return locno;
-	}
+	}//findlocno
 	public int getTotalPostCount() throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -159,5 +159,5 @@ public class PostDAO {
 			closeAll(rs, pstmt,con);
 		}
 		return totalCount;
-	}
+	}// totalcount
 }
