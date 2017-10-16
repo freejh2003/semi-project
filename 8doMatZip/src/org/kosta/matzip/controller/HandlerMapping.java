@@ -34,6 +34,10 @@ public class HandlerMapping {
 			c = new MemberPasswordFindController();
 		} else if (command.equals("postdetail")) {
 			c = new PostDetailController();
+		} else if (command.equals("requestboard")) {
+			c = new RequestBoardController();
+		} else if (command.equals("reqregister")) {
+			c = new RequestRegisterController();
 		}
 		return c;
 	}

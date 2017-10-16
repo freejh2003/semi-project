@@ -85,6 +85,7 @@ create table comments(
 )
 insert into comments(comno,pno,mid,comcontent,comdate)values(com_seq.nextval,'23','bbbbb','저도 좋았어요~',sysdate);
 delete from comments where pno='23'
+
 create table request(
 	reqno varchar2(100) primary key,
 	mid varchar2(100) not null,
@@ -92,6 +93,11 @@ create table request(
 	reqdate date not null,
 	constraint fk_req_member foreign key(mid) references member(mid)
 )
+
+insert into request(reqno,mid,reqcontent,reqdate)values(req_seq.nextval,'bbbbb','어디어디어디어디',sysdate);
+select * from request;
+
+SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') FROM request r , member m WHERE m.mid=r.mid;	
 
 create table post_myfav(
 	mid varchar2(100) not null,
@@ -112,6 +118,7 @@ select * from post;
 insert into imagepath(pno,ipath)values('1','초밥1.png');
 insert into imagepath(pno,ipath)values('1','초밥2.png');
 delete from imagepath where pno='23'
+
 create table QNA(
 	mid varchar2(100) not null,
 	answer varchar2(100) not null,

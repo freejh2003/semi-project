@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +17,19 @@
 </div>
 <div class="container">
   <div class="btn-group">
-  	<button type="button" class="btn btn-primary">Home</button>
+  	<a href="DispatcherServlet?command=showmap" class="btn btn-primary">HOME</a>
     <button type="button" class="btn btn-primary">전체</button>
-    <button type="button" class="btn btn-primary">요청</button>
+    <a href="DispatcherServlet?command=requestboard" class="btn btn-primary">요청</a>
+    <c:if test="${sessionScope.mvo!=null}">
     <div class="btn-group">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       마이페이지 <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
         <li><a href="#">관심맛집</a></li>
-        <li><a href="#">회원정보수정</a></li>
+        <li><a href="DispatcherServlet?command=mupdateview&mid=${sessionScope.mvo.mid}">회원정보수정</a></li>
       </ul>
     </div>
+    </c:if>
   </div>
 </div>
 </body>
