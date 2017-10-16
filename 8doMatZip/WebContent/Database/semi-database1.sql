@@ -86,7 +86,7 @@ create table comments(
 	constraint fk_com_post foreign key(pno) references post(pno)
 )
 insert into comments(comno,pno,mid,comcontent,comdate)values(com_seq.nextval,'23','bbbbb','저도 좋았어요~',sysdate);
-
+delete from comments where pno='23'
 create table request(
 	reqno varchar2(100) primary key,
 	mid varchar2(100) not null,
@@ -112,7 +112,7 @@ create table imagepath(
 )
 select * from post;
 insert into imagepath(pno,ipath)values('23','C:\Users\Administrator\git\semi-project\8doMatZip\WebContent\pictures');
-
+delete from imagepath where pno='23'
 create table QNA(
 	mid varchar2(100) not null,
 	answer varchar2(100) not null,

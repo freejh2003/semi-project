@@ -19,7 +19,7 @@ public class MemberUpdateController implements Controller {
 		MemberVO umvo=new MemberVO(mid,ano,mpassword,mname,maddress,mtel);
 		MemberDAO.getInstance().memberUpdate(umvo);
 		//request.setAttribute("url", "Member/mupdate.jsp");
-		return "redirect:../Member/mupdate_result.jsp";
+		return "redirect:Member/mupdate_result.jsp";
 	}
 
 }
