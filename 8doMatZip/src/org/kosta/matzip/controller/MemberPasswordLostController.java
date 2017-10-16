@@ -7,8 +7,7 @@ public class MemberPasswordLostController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		request.setAttribute("url", "passwordrecover.jsp");
+		request.setAttribute("url", "../Member/passwordrecover.jsp");
 		return "Template/home.jsp";
 	}
 

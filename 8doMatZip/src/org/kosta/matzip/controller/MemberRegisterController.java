@@ -19,7 +19,7 @@ public class MemberRegisterController implements Controller {
 		MemberVO vo=new MemberVO(mid, ano, mpassword, mname, maddress, mtel);
 		MemberDAO.getInstance().register(vo);
 
-		return "redirect:../Member/mregister_result.jsp";
+		return "redirect:Member/mregister_result.jsp";
 	}
 
 }
