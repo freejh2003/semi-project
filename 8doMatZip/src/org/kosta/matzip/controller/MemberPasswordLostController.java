@@ -9,7 +9,7 @@ public class MemberPasswordLostController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		request.setAttribute("url", "passwordrecover.jsp");
-		return "home.jsp";
+		return "Template/home.jsp";
 	}
 
 }

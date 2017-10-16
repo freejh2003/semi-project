@@ -9,7 +9,7 @@ public class HandlerMapping {
 	public Controller create(String command){
 		Controller c=null;
 		if(command.equals("mainlist")){
-			c=new MainListController();
+			c=new ShowMapController();
 		}else if(command.equals("login")){
 			c=new LoginController();
 		}else if(command.equals("logout")){
@@ -28,6 +28,10 @@ public class HandlerMapping {
 			c=new MemberPasswordLostController();
 		}else if(command.equals("idcheck")) {
 	    	  c=new IdCheckController(); 
+	      }else if(command.equals("showmap")){ 
+	    	  c= new ShowMapController();
+	      }else if(command.equals("sortbyloc")) {
+	    	  c= new SortByLocation();
 	      }
 		return c;
 	}

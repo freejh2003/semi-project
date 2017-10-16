@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
-<head>
-<script src="http://koreamz.com/js/jquery-1.8.3.min.js"></script>
+<head> -->
+<!-- <script src="http://koreamz.com/js/jquery-1.8.3.min.js"></script>
 <script src="http://koreamz.com/js/common.js"></script>
 <script src="http://koreamz.com/js/wrest.js"></script>
 <script src="http://koreamz.com/js/owl.carousel.js"></script>
@@ -13,8 +13,8 @@
 
 
 <script src="http://koreamz.com/js/Wo_Banner2.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+<!-- <title>Insert title here</title> -->
 <style>
 	.ShopTitle {
 		width: 940px;
@@ -192,7 +192,7 @@ $(function(){
 			for(var y = 1; y < area[x].length; y++){
 				var select = "";
 				if(area[x][y] == fors){select = " select";}
-				$("#context").append("<a href='city1.jsp?s="+encodeURI(area[x][0])+"&g="+encodeURI (area[x][y])+"'><div class='for"+select+"'>"+area[x][y]+"</div></a>");
+				$("#context").append("<a href='DispatcherServlet?command=sortbyloc&loc="+encodeURI(area[x][0])+"&sigungu="+encodeURI (area[x][y])+"'><div class='for"+select+"'>"+area[x][y]+"</div></a>");
 			}//if END
 			break;
 		}// if END			
@@ -211,7 +211,7 @@ $(function(){
 		for(var x = 0; x < area.length; x++){
 			if(area[x][0] == froms){
 				for(var y = 1; y < area[x].length; y++){
-					$("#context").append("<a href='city1.jsp?s="+encodeURI(area[x][0])+"&g="+encodeURI(area[x][y])+"'><div class='for'>"+area[x][y]+"</div></a>");
+					$("#context").append("<a href='DispatcherServlet?command=sortbyloc&loc="+encodeURI(area[x][0])+"&sigungu="+encodeURI(area[x][y])+"'><div class='for'>"+area[x][y]+"</div></a>");
 				}//if END
 				break;
 			}// if END			
@@ -219,9 +219,9 @@ $(function(){
 	});	
 });
 </script>
-</head>
+<!-- </head>
 <body>
-<div class="highlight-line" style="background: #f3f3f3;">
+ --><div class="highlight-line" style="background: #f3f3f3;">
 	<div id="MAP" class="frame">
 		<div id="MAP_title"><em id="icon"></em><span style="color:#DF1E37;font-family: NanumGothicB;">지역별</span> 맛집찾기<span id="submsg">  지도에서 지역을 선택한 후 상세지역명을 선택해주세요.</span></div>
 
@@ -256,5 +256,5 @@ $(function(){
 	
 	<div class="clear"></div>
 </div>
-</body>
-</html>
+<!-- </body>
+</html> -->

@@ -13,8 +13,8 @@ public class MemberUpdateViewController implements Controller {
 		String mid=request.getParameter("mid");
 		MemberVO mvo=MemberDAO.getInstance().FindMemberById(mid);
 		request.setAttribute("mvo", mvo);
-		request.setAttribute("url", "Member/mupdate.jsp");
-		return "home.jsp";
+		request.setAttribute("url", "../Member/mupdate.jsp");
+		return "Template/home.jsp";
 	}
 
 }
