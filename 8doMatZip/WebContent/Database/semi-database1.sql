@@ -112,7 +112,8 @@ create table imagepath(
 	constraint pk_imgp_post primary key (pno, ipath)
 )
 select * from post;
-insert into imagepath(pno,ipath)values('23','C:\Users\Administrator\git\semi-project\8doMatZip\WebContent\pictures');
+insert into imagepath(pno,ipath)values('1','초밥1.png');
+insert into imagepath(pno,ipath)values('1','초밥2.png');
 delete from imagepath where pno='23'
 create table QNA(
 	mid varchar2(100) not null,
