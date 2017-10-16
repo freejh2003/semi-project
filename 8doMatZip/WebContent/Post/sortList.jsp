@@ -4,6 +4,7 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
 <a href="index.jsp">home</a><br><br>
+
 <table class="table table-bordered">
 <thead>
 	<tr>

@@ -55,6 +55,7 @@ create table post(
 	phit number not null,
 	plike number not null,
 	locno varchar2(100) not null,
+	
 	constraint fk_post_member foreign key(mid) references member(mid),
 	constraint fk_post_location foreign key(locno) references location(locno)
 )
@@ -75,7 +76,7 @@ insert into post(pno,mid,ptitle,pcontent,pdate,phit,plike,pstar,locno)
 values(pno_seq.nextval,'bbbbb','물회가 맛있는 잠실 부부횟집','양이 많아요',sysdate,10,100,4,2);
 delete from post where pno='5';
 select * from post;
-
+delete from post;
 create table comments(
 	comno varchar2(100) primary key,
 	pno varchar2(100) not null,

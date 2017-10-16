@@ -15,6 +15,7 @@ public class SortByLocation implements Controller {
 		String loc = request.getParameter("loc");
 		String sigungu = request.getParameter("sigungu");
 		ArrayList<PostVO> sortlist = PostDAO.getInstance().PostSortByLocation(loc, sigungu);
+		
 		request.setAttribute("sortlist",sortlist);
 		request.setAttribute("url","../Post/sortList.jsp");
 		return "Template/home.jsp";
