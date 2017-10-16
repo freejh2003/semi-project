@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<td>비밀번호</td>
-			<td><input type="text" name="password" size="6" class="form-control"></td>
+			<td><input type="password" name="password" size="6" class="form-control"></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="right">

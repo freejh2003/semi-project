@@ -1,12 +1,12 @@
 drop table imagepath;
 drop table QNA;
 drop table comments;
-drop table authority;
 drop table post_myfav;
 drop table post;
 drop table location;
 drop table request;
 drop table member;
+drop table authority;
 commit
 create table authority(
 	ano varchar2(100) primary key,
@@ -45,17 +45,21 @@ insert into member(mid,ano,mpassword,mname,maddress,mtel)values('bbbbb','1','bbb
 
 select * from member;
 select * from post;
-create table post(
+create table post( --post table
 	pno varchar2(100) primary key,
-	mid varchar2(100) not null,
 	ptitle varchar2(100) not null,
+	phit number not null,
 	pcontent clob not null,
 	pstar number not null,
-	pdate date not null,
-	phit number not null,
 	plike number not null,
+	paddress varchar2(100) not null,
+	ptime varchar2(100) not null,
+	ptel varchar2(50) not null,
+	pprice varchar2(100) not null,
+	petc varchar2(100) not null,
+	pdate date not null,
+	mid varchar2(100) not null,
 	locno varchar2(100) not null,
-	
 	constraint fk_post_member foreign key(mid) references member(mid),
 	constraint fk_post_location foreign key(locno) references location(locno)
 )
@@ -67,14 +71,7 @@ create sequence pno_seq;
 create sequence com_seq;
 create sequence req_seq;
 
-insert into post(pno,mid,ptitle,pcontent,pdate,phit,plike,pstar,locno)
-values(pno_seq.nextval,'aaaaa','강동구에서 제일 맛있는 초밥집-원숭이초밥','회가 신선해요',sysdate,3,50,4,1);
-insert into post(pno,mid,ptitle,pcontent,pdate,phit,plike,pstar,locno)
-values(pno_seq.nextval,'bbbbb','삼겹살 맛집 - 시집','인테리어가 깔끔하고 서비스가 좋아요',sysdate,40,50,4,1);
 
-insert into post(pno,mid,ptitle,pcontent,pdate,phit,plike,pstar,locno)
-values(pno_seq.nextval,'bbbbb','물회가 맛있는 잠실 부부횟집','양이 많아요',sysdate,10,100,4,2);
-delete from post where pno='5';
 select * from post;
 delete from post;
 create table comments(
