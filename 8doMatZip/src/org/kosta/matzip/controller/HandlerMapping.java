@@ -26,7 +26,9 @@ public class HandlerMapping {
 			c=new MemberLeaveController();
 		}else if(command.equals("lostpassword")){
 			c=new MemberPasswordLostController();
-		}
+		}else if(command.equals("idcheck")) {
+	    	  c=new IdCheckController(); 
+	      }
 		return c;
 	}
 }

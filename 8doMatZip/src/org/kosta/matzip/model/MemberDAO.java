@@ -117,5 +117,40 @@ public class MemberDAO {
 			closeAll(rs, pstmt,con);
 		}
 	}//delete
-	
+	public void register(MemberVO vo) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="insert into member(mid,ano,mpassword,mname,maddress,mtel)values(?,?,?,?,?,?)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getAno());
+			pstmt.setString(3, vo.getMpassword());
+			pstmt.setString(4, vo.getMname());
+			pstmt.setString(5, vo.getMaddress());
+			pstmt.setString(6, vo.getMtel());
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}//register
+	public String IdCheck(String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String idcomfirm=null;
+		try {
+			con=getConnection();
+			String sql="select mid from member where mid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				idcomfirm=rs.getString(1);
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return idcomfirm;
+	}//idcheck
 }//class
