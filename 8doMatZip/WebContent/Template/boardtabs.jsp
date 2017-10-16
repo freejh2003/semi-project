@@ -11,6 +11,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div align="left">
+  <a href="DispatcherServlet?command=showmap"><img src="pictures/로고1.png" width="300" height="250"></a>
+</div>
 <div class="container">
   <div class="btn-group">
   	<button type="button" class="btn btn-primary">Home</button>
