@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.kosta.matzip.model.PostDAO;
 import org.kosta.matzip.model.PostVO;
 
-public class SortByLocation implements Controller {
+public class PostDetailController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String loc = request.getParameter("loc");
-		String sigungu = request.getParameter("sigungu");
-		ArrayList<PostVO> sortlist = PostDAO.getInstance().PostSortByLocation(loc, sigungu);
-		
-		request.setAttribute("sortlist",sortlist);
-		request.setAttribute("url","../Post/sortList.jsp");
+		String pno = request.getParameter("pno");
+		ArrayList<String> images = PostDAO.getInstance().findImageByPno(pno);
+		PostVO pvo = PostDAO.getInstance().findPostByPno(pno);
+		pvo.setPictures(images);
+		request.setAttribute("pvo",pvo);
+		request.setAttribute("url","../Post/postDetail.jsp");
 		return "Template/home.jsp";
 	}
 

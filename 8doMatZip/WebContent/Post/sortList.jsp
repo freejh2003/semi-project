@@ -3,13 +3,13 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
-<a href="index.jsp">home</a><br><br>
-
+<a href="index.jsp">home</a><br>
+${requestScope.loc } > ${requestScope.sigungu} <br>
 <table class="table table-bordered">
 <thead>
 	<tr>
-		<th>loc</th><th>sigungu</th><th>ptitle</th><th>pcontent</th><th>pstar</th>
-		<th>phit</th><th>pdate</th><th>plike</th><th>mid</th>
+		<th>NO</th><th>제목</th><th>작성일시</th>
+		<th>작성자</th><th>조회수</th>
 	</tr>
 </thead>
 <tbody>
@@ -17,15 +17,11 @@
 <c:when test="${fn:length(requestScope.sortlist)!=0}">
 <c:forEach items="${requestScope.sortlist }" var="locpost">
       <tr>
-      	<td>${locpost.loc }</td>
-      	<td>${locpost.sigungu }</td>
-        <td>${locpost.ptitle }</td>       
-       	<td>${locpost.pcontent }</td>
-        <td>${locpost.pstar}</td>
-        <td>${locpost.phit}</td>
+      	<td>${locpost.pno }</td>
+        <td><a href="DispatcherServlet?command=postdetail&pno=${locpost.pno }">${locpost.ptitle }</a></td>       
         <td>${locpost.pdate }</td>
-        <td>${locpost.plike }</td>
         <td>${locpost.mid }</td>
+        <td>${locpost.phit}</td>
       </tr>
    </c:forEach>
 </c:when>
