@@ -120,8 +120,8 @@ create table QNA(
 	constraint fk_qna_member foreign key(mid) references member(mid),
 	constraint pk_qna_member primary key (mid, answer)
 )
-
-
+insert into qna (mid, answer) values ('bbbbb','bbbbb');
+select m.mpassword from member m, qna q where m.mid=q.mid and m.mid='bbbbb' and q.answer='bbbbb';
 
 
 

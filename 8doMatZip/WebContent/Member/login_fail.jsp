@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	alert("로그인 실패!");
-	location.href="../DispatcherServlet?command=mainlist";
+	location.href="../DispatcherServlet?command=showmap";
 </script>
 
 

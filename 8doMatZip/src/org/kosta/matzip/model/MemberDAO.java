@@ -153,4 +153,24 @@ public class MemberDAO {
 		}
 		return idcomfirm;
 	}//idcheck
+	public String FindPassword(String mid, String answer) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String mpassword="not found";
+		try {
+			con=getConnection();
+			String sql="select m.mpassword from member m, qna q where m.mid=q.mid and m.mid=? and q.answer=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, answer);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				mpassword=rs.getString(1);				
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return mpassword;
+	}
 }//class

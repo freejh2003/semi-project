@@ -20,7 +20,7 @@ public class LoginController implements Controller {
 		}else{
 			HttpSession session=request.getSession();
 			session.setAttribute("mvo", vo);
-			path="redirect:DispatcherServlet?command=mainlist";
+			path="redirect:DispatcherServlet?command=showmap";
 		}
 		return path;
 	}

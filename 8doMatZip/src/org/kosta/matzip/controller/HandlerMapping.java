@@ -8,7 +8,7 @@ public class HandlerMapping {
 	}
 	public Controller create(String command){
 		Controller c=null;
-		if(command.equals("mainlist")){
+		if(command.equals("showmap")){
 			c=new ShowMapController();
 		}else if(command.equals("login")){
 			c=new LoginController();
@@ -28,10 +28,10 @@ public class HandlerMapping {
 			c=new MemberPasswordLostController();
 		}else if(command.equals("idcheck")) {
 	    	  c=new IdCheckController(); 
-	      }else if(command.equals("showmap")){ 
-	    	  c= new ShowMapController();
 	      }else if(command.equals("sortbyloc")) {
 	    	  c= new SortByLocation();
+	      }else if(command.equals("findpassword")) {
+	    	  c= new MemberPasswordFindController();
 	      }
 		return c;
 	}
