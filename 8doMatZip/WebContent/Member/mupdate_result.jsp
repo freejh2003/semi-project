@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	alert("수정완료!!");
-	location.href="../DispatcherServlet?command=mainlist";
+	location.href="../DispatcherServlet?command=showmap";
 </script>

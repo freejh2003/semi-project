@@ -38,8 +38,8 @@
 			<div class="col-sm-10 main">
 				 <jsp:include page="${requestScope.url}" />
 			</div>
-				<div class="col-sm-2">
-
+			<div class="col-sm-2">
+				 <jsp:include page="right.jsp" />
 			</div>
 		</div>
 	</div>

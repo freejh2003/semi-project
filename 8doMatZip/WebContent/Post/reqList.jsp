@@ -5,8 +5,29 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
 
-<table class="table table-bordered">
+	$(document).ready(function(){
+		$("#requesttable tbody #updaterequest").hide();
+		$("#requpdateBtn").click(function(){
+			$("#updaterequest").show();
+			$("#reqcomlist").hide();
+		}); //requpdate
+		$("#requpdatecancelBtn").click(function(){
+			$("#updaterequest").hide();
+			$("#reqcomlist").show();
+			return false;
+		});// cancel
+		$("#requpdateokBtn").click(function(){
+			$("#updaterequest").hide();
+			$("#reqcomlist").show();
+			
+			return false;
+		});
+	});
+</script>
+
+<table class="table table-bordered" id="requesttable">
 <thead>
 	<tr>
 		<th>NO</th><th>작성자</th><th>요청사항</th>
@@ -17,16 +38,31 @@
 <c:choose>
 <c:when test="${fn:length(requestScope.rlist)!=0}">
 <c:forEach items="${requestScope.rlist}" var="reqpost">
-      <tr>
-      	<td>${reqpost.reqno}</td>
-        <td>${reqpost.mid }</td>
-        <td>${reqpost.reqcontent }</td>
-        <td>${reqpost.reqdate}</td>
-        <c:if test="${sessionScope.mvo.mid==reqpost.mid}">
-        <td><a href="DispatcherServlet?command=requestdelete&reqno=${reqpost.reqno }">삭제</a></td>
-        </c:if>        
-      </tr>
-   </c:forEach>
+						<tr>
+							<td>${reqpost.reqno}</td>
+							<td>${reqpost.mid }</td>
+							<td>${reqpost.reqcontent }</td>
+							<td>${reqpost.reqdate}</td>
+							<c:if test="${sessionScope.mvo.mid==reqpost.mid}">
+								<td><a href="#" type="button" class="btn btn-default" id="requpdateBtn">수정</a></td>
+								<td><a
+									href="DispatcherServlet?command=requestdelete&reqno=${reqpost.reqno }"
+									type="button" class="btn btn-default">삭제</a></td>
+							</c:if>
+						</tr>			
+					<tr>
+						<td>${reqpost.reqno}</td>
+						<td>${reqpost.mid }</td>
+						<td id="afterupdate"><textarea class="form-control"
+								name="reqcontent" placeholder="Contents" rows="5"
+								required="required" style="resize: none;">${reqpost.reqcontent }</textarea></td>
+						<td>${reqpost.reqdate}</td>
+						<td><a
+							href="DispatcherServlet?command=requestupdate&reqno=${reqpost.reqno }"
+							type="button" class="btn btn-default" id="requpdateokBtn">수정</a></td>
+						<td><a href="#" type="button" class="btn btn-default" id="requpdatecancelBtn">취소</a></td>
+					</tr>
+				</c:forEach>
 </c:when>
 <c:otherwise>
 	<tr>
@@ -36,6 +72,10 @@
 </c:choose>
 </tbody>
 </table>
+
+
+       
+
 <c:if test="${sessionScope.mvo!=null}">
 <form method="post" action="DispatcherServlet">
 <input type="hidden" value="reqregister" name="command">
