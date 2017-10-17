@@ -38,6 +38,8 @@ public class HandlerMapping {
 			c = new RequestBoardController();
 		} else if (command.equals("reqregister")) {
 			c = new RequestRegisterController();
+		} else if (command.equals("requestdelete")) {
+			c = new RequestDeleteController();
 		}
 		return c;
 	}

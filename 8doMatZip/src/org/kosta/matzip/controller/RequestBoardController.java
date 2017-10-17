@@ -15,7 +15,6 @@ public class RequestBoardController implements Controller {
 		ArrayList<RequestVO> rlist=RequestDAO.getInstance().getRequestList();
 		request.setAttribute("rlist",rlist);
 		request.setAttribute("url","../Post/reqList.jsp");
-		System.out.println(rlist.size());
 		return "Template/home.jsp";
 	}
 

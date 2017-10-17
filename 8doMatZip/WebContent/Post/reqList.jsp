@@ -3,7 +3,6 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/home.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -23,6 +22,9 @@
         <td>${reqpost.mid }</td>
         <td>${reqpost.reqcontent }</td>
         <td>${reqpost.reqdate}</td>
+        <c:if test="${sessionScope.mvo.mid==reqpost.mid}">
+        <td><a href="DispatcherServlet?command=requestdelete&reqno=${reqpost.reqno }">삭제</a></td>
+        </c:if>        
       </tr>
    </c:forEach>
 </c:when>

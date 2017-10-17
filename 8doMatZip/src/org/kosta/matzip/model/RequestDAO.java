@@ -55,7 +55,7 @@ public class RequestDAO {
 			StringBuilder sql=new StringBuilder();
 			sql.append("SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') ");
 			sql.append("FROM request r , member m ");
-			sql.append("WHERE m.mid=r.mid");		
+			sql.append("WHERE m.mid=r.mid order by r.reqdate desc");		
 			//sql.append("order by pno desc");
 			pstmt=con.prepareStatement(sql.toString());		
 			//pstmt.setInt(1,bean.getStartRowNumber());
@@ -81,15 +81,26 @@ public class RequestDAO {
 		try{
 			con=getConnection(); 
 			String sql="insert into request(reqno,mid,reqcontent,reqdate)values(req_seq.nextval,?,?,sysdate)";
-			//sql.append("order by pno desc");
 			pstmt=con.prepareStatement(sql);		
 			pstmt.setString(1, mid);
 			pstmt.setString(2, reqcontent);
-			//pstmt.setInt(1,bean.getStartRowNumber());
-			//pstmt.setInt(2,bean.getEndRowNumber());
 			rs=pstmt.executeQuery();
 		}finally{
 			closeAll(rs,pstmt,con);
 		}
 	}//reqregister
+	public void requestDelete(String reqno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection(); 
+			String sql="delete from request where reqno=?";
+			pstmt=con.prepareStatement(sql);		
+			pstmt.setString(1, reqno);
+			rs=pstmt.executeQuery();
+		}finally{
+			closeAll(rs,pstmt,con);
+		}	
+	}// reqdelete
 }//class
