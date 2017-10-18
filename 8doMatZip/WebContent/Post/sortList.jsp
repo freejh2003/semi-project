@@ -4,7 +4,7 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
 <a href="index.jsp">home</a><br>
-${requestScope.loc } > ${requestScope.sigungu} <br>
+${sessionScope.loc } > ${sessionScope.sigungu} <br>
 <table class="table table-bordered">
 <thead>
 	<tr>
@@ -14,8 +14,8 @@ ${requestScope.loc } > ${requestScope.sigungu} <br>
 </thead>
 <tbody>
 <c:choose>
-<c:when test="${fn:length(requestScope.sortlist)!=0}">
-<c:forEach items="${requestScope.sortlist }" var="locpost">
+<c:when test="${fn:length(sessionScope.sortlist)!=0}">
+<c:forEach items="${sessionScope.sortlist }" var="locpost">
       <tr>
       	<td>${locpost.pno }</td>
         <td><a href="DispatcherServlet?command=postdetail&pno=${locpost.pno }">${locpost.ptitle }</a></td>       

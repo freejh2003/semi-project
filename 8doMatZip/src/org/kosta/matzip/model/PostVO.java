@@ -24,6 +24,20 @@ public class PostVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public PostVO(String ptitle, String pcontent, String paddress, String ptime, String ptel, String pprice,
+			String petc, String mid) {
+		super();
+		this.ptitle = ptitle;
+		this.pcontent = pcontent;
+		this.paddress = paddress;
+		this.ptime = ptime;
+		this.ptel = ptel;
+		this.pprice = pprice;
+		this.petc = petc;
+		this.mid = mid;
+	}
+
 	public PostVO(String pno, String ptitle, ArrayList<String> pictures, String pcontent, int pstar, int plike,
 			String paddress, String ptime, String ptel, String pprice, String petc, String pdate, int phit, String loc,
 			String sigungu, String mid, ArrayList<CommentVO> commentList) {
@@ -72,6 +86,46 @@ public class PostVO {
 		this.pno = pno;
 		this.ptitle = ptitle;
 		this.pdate = pdate;
+		this.phit = phit;
+		this.loc = loc;
+		this.sigungu = sigungu;
+		this.mid = mid;
+	}
+	
+	public PostVO(String ptitle, ArrayList<String> pictures, String pcontent, int pstar, String paddress, String ptime,
+			String ptel, String pprice, String petc, String pdate, String loc, String sigungu,
+			ArrayList<CommentVO> commentList) {
+		super();
+		this.ptitle = ptitle;
+		this.pictures = pictures;
+		this.pcontent = pcontent;
+		this.pstar = pstar;
+		this.paddress = paddress;
+		this.ptime = ptime;
+		this.ptel = ptel;
+		this.pprice = pprice;
+		this.petc = petc;
+		this.pdate = pdate;
+		this.loc = loc;
+		this.sigungu = sigungu;
+		this.commentList = commentList;
+	}
+	
+	public PostVO(String pno, String ptitle, ArrayList<String> pictures, String pcontent, int pstar, int plike,
+			String paddress, String ptime, String ptel, String pprice, String petc, int phit, String loc,
+			String sigungu, String mid) {
+		super();
+		this.pno = pno;
+		this.ptitle = ptitle;
+		this.pictures = pictures;
+		this.pcontent = pcontent;
+		this.pstar = pstar;
+		this.plike = plike;
+		this.paddress = paddress;
+		this.ptime = ptime;
+		this.ptel = ptel;
+		this.pprice = pprice;
+		this.petc = petc;
 		this.phit = phit;
 		this.loc = loc;
 		this.sigungu = sigungu;

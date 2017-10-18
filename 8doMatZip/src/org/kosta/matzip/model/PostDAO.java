@@ -175,7 +175,96 @@ public class PostDAO {
 		}
 		
 		return pvo;
-	}
+	}//findPostByPno
+	public void updateHit(String pno) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try{
+			con=getConnection(); 
+			String sql="update post set phit=phit+1 where pno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, pno);	
+			pstmt.executeUpdate();			
+		}finally{
+			closeAll(pstmt,con);
+		}
+	}//hit
+	@SuppressWarnings("resource")
+	public int updateLike(String pno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+
+		int plike = -1;
+		try{
+			con=getConnection(); 
+			String sql="update post set plike=plike+1 where pno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, pno);	
+			pstmt.executeUpdate();
+			sql="select plike from post where pno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, pno);	
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				plike=rs.getInt(1);
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return plike;
+	}//like
+	public void deletePost(String pno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection(); 
+			StringBuilder sql=new StringBuilder();	
+			sql.append("DELETE ");
+			sql.append("FROM post ");
+			sql.append("WHERE pno=? ");		
+			pstmt=con.prepareStatement(sql.toString());	
+			pstmt.setString(1,pno);
+			pstmt.executeQuery();
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+	}//delete
+	public PostVO updatePost(PostVO pvo) throws SQLException {
+		PostVO updatedpvo = null;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			String locno = findLocNo(pvo.getLoc(),pvo.getSigungu());
+			con=getConnection(); 
+			StringBuilder sql=new StringBuilder();	
+			sql.append("UPDATE post ");
+			sql.append("SET ptitle=?,pcontent=?,pstar=?,plike=?,paddress=?,ptime=?,ptel=?,pprice=?,petc=?,pdate=sysdate,phit=?,locno=?,mid=? ");
+			sql.append("WHERE pno=? ");		
+			pstmt=con.prepareStatement(sql.toString());	
+			pstmt.setString(1,pvo.getPtitle());
+			pstmt.setString(2,pvo.getPcontent());
+			pstmt.setInt(3,pvo.getPstar());
+			pstmt.setInt(4,pvo.getPlike());
+			pstmt.setString(5,pvo.getPaddress());
+			pstmt.setString(6,pvo.getPtime());
+			pstmt.setString(7,pvo.getPtel());
+			pstmt.setString(8,pvo.getPprice());
+			pstmt.setString(9,pvo.getPetc());
+			pstmt.setInt(10,pvo.getPhit());
+			pstmt.setString(11,locno);
+			pstmt.setString(12,pvo.getMid());
+			pstmt.setString(13,pvo.getPno());
+			pstmt.executeUpdate();
+			updatedpvo=findPostByPno(pvo.getPno());
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return updatedpvo;
+	}//update
+	
 	public ArrayList<String> findImageByPno(String pno) throws SQLException {
 		ArrayList<String> path = new ArrayList<String>();
 		Connection con=null;
@@ -200,7 +289,7 @@ public class PostDAO {
 			closeAll(rs,pstmt,con);
 		}
 		return path;
-	}
+	}//findImageByPno
 	public String findLocNo(String loc,String sigungu) throws SQLException {
 		String locno=null;
 		Connection con=null;
@@ -225,6 +314,77 @@ public class PostDAO {
 		}
 		return locno;
 	}//findlocno
+	public ArrayList<CommentVO> getCommentList(String pno) throws SQLException{
+		ArrayList<CommentVO> clist = new ArrayList<CommentVO>();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection(); 
+			StringBuilder sql=new StringBuilder();
+			sql.append("SELECT c.comno,c.pno,c.mid,c.comcontent,c.comdate ");
+			sql.append("FROM post p, comments c ");
+			sql.append("WHERE p.pno=? and p.pno=c.pno ORDER BY c.comdate ASC ");		
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1,pno);
+			rs=pstmt.executeQuery();
+			while(rs.next()){		
+				clist.add(new CommentVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+			}			
+			
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return clist;
+	}
+	@SuppressWarnings("resource")
+	public CommentVO addComment(CommentVO cvo) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		CommentVO curr = null;
+		String comno=null;
+		try{
+			con=getConnection();
+			String sql="insert into comments(comno,pno,mid,comcontent,comdate)values(com_seq.nextval,?,?,?,sysdate)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,cvo.getPno());
+			pstmt.setString(2,cvo.getMid());
+			pstmt.setString(3,cvo.getComcontent());
+			pstmt.executeQuery();
+			sql="select com_seq.currval from dual";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				comno = rs.getString(1);
+			sql="select comno,pno,mid,comcontent,comdate from comments where comno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,comno);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				curr = new CommentVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+		}finally{
+			closeAll(rs, pstmt,con);
+		}
+		return curr;
+	}
+	public void deleteComment(String comno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection(); 
+			StringBuilder sql=new StringBuilder();	
+			sql.append("DELETE ");
+			sql.append("FROM comments ");
+			sql.append("WHERE comno=? ");		
+			pstmt=con.prepareStatement(sql.toString());	
+			pstmt.setString(1,comno);
+			pstmt.executeQuery();
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+	}
 	public int getTotalPostCount() throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -243,4 +403,77 @@ public class PostDAO {
 		}
 		return totalCount;
 	}// totalcount
-}
+	@SuppressWarnings("resource")
+	public String reviewRegister(PostVO vo, String locno) throws SQLException { //글 등록하는 메서드
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String pno=null;
+		try {
+			con=getConnection();
+			StringBuilder sql=new StringBuilder();
+			sql.append("insert into post(pno, ptitle, phit, pcontent, pstar, plike, paddress, ptime, ptel, pprice, petc, pdate, mid, locno) ");
+			sql.append("values(pno_seq.nextval, ?, 0, ?, 0, 0, ?, ?, ?, ?, ?, sysdate,?, ?) ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, vo.getPtitle());
+			pstmt.setString(2, vo.getPcontent());
+			pstmt.setString(3, vo.getPaddress());
+			pstmt.setString(4, vo.getPtime());
+			pstmt.setString(5, vo.getPtel());
+			pstmt.setString(6, vo.getPprice());
+			pstmt.setString(7,  vo.getPetc());
+			pstmt.setString(8, vo.getMid());
+			pstmt.setString(9, locno);
+			rs=pstmt.executeQuery();
+			String sql1="select pno_seq.currval from dual";
+			pstmt=con.prepareStatement(sql1);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				pno=rs.getString(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return pno;
+		
+	}
+	public String mostRecentPost() throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String pno=null;
+		try {
+			con=getConnection();
+			StringBuilder sql=new StringBuilder();
+			sql.append("select pno_seq.nextval-1 from dual");
+			pstmt=con.prepareStatement(sql.toString());
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				pno=rs.getString(1);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return pno;
+	}
+	public void registerImage(String pno, ArrayList<String> pictures) throws SQLException { //이미지 저장하는 메서드
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try{
+			con=getConnection();
+			for(int i=0; i<pictures.size(); i++) {
+				if(pictures.get(i)!=null) {
+			StringBuilder sql=new StringBuilder();
+			sql.append("insert into imagepath(pno, ipath) ");
+			sql.append("values(?, ?) ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, pno);
+			pstmt.setString(2, pictures.get(i));
+			pstmt.executeQuery();
+				}
+			}
+		}finally{
+			closeAll(pstmt,con);
+		}
+	}
+}//class

@@ -17,11 +17,13 @@ public class LoginController implements Controller {
 		String path=null;
 		if(vo==null){
 			path="redirect:Member/login_fail.jsp";
-		}else{
-			HttpSession session=request.getSession();
-			session.setAttribute("mvo", vo);
-			path="redirect:DispatcherServlet?command=showmap";
-		}
+	     }else{
+	         HttpSession session=request.getSession();
+	         session.setAttribute("mvo", vo);
+	         //session.setAttribute("pnoList",new ArrayList<String>());
+	         //path="redirect:DispatcherServlet?command=showmap";
+	         path="Member/goCurrentPage.jsp";
+	      }
 		return path;
 	}
 }

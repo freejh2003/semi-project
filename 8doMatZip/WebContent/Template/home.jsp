@@ -39,7 +39,7 @@
 				 <jsp:include page="${requestScope.url}" />
 			</div>
 			<div class="col-sm-2">
-				 <jsp:include page="rightlist.jsp" />
+				<%--  <jsp:include page="rightlist.jsp" /> --%>
 			</div>
 		</div>
 	</div>

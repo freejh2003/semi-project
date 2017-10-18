@@ -44,6 +44,26 @@ public class HandlerMapping {
 			c = new RequestSelectController();
 		}	else if (command.equals("requestupdate")) {
 			c = new RequestUpdateController();
+		}else if(command.equals("plikeupdate")) {
+			c= new PlikeUpdateController();
+		}else if(command.equals("updatepostview")) {
+			c = new UpdatePostViewController();
+		}else if(command.equals("updatepost")) {
+			c = new UpdatePostController();
+		} else if(command.equals("deletepost")) {
+			c = new DeletePostController();
+		} else if(command.equals("addcomment")) {
+			c = new AddCommentController();
+		} else if(command.equals("deletecomment")) {
+			c = new DeleteCommentController();
+		}else if(command.equals("reviewregister")) {
+			c = new ReviewRegisterController();
+		}else if(command.equals("reviewregisterView")) {
+			c = new ReviewRegisterViewController();
+		}else if(command.equals("mostRecentPost")) {
+			c= new MostRecentPostController();
+		}else if(command.equals("imageupload")) {
+			c = new ImageUploadController();
 		}
 		return c;
 	}
