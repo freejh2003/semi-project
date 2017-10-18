@@ -61,15 +61,54 @@ $('document').ready(function() {
    });
   }
  });
-
 });
 </script>
+<script type="text/javascript">
+ $(document).ready(function() {
+	 $(".star_rating a").removeClass("on");
+	 $( ".star_rating a" ).click(function() {
+	     $(this).addClass("on").prevAll("a").addClass("on");
+	     var star = $(this).prevAll("a").length+1;
+	     $("#pstar").text(star);
+	     $("#pstarhidden").val(star);
+	     $( ".star_rating a" ).click(function() {
+	     	if(($(this).prevAll("a").length+1)<star){
+	     		$(".star_rating a").removeClass("on");    	
+	     		$(this).addClass("on").prevAll("a").addClass("on");
+	     	}
+	     });
+	});
+ });//ready
+</script>
+<style type="text/css">
+.star_rating {font-size:0; letter-spacing:-4px;}
+.star_rating a {
+    font-size:22px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating a.on {color:#ffcc00;}
+</style>
 <form action="DispatcherServlet" method="post" onsubmit="return checkConfirm()" enctype="multipart/form-data">
 <input type="hidden" name="mid" value="${sessionScope.mvo.mid}">
 제목:<input type="text" name="title"><br>
 내용:<input type="text" name="content"><br>
 사진1:<input type="file" name="filename"><br>
 사진2:<input type="file" name="filename2"><br>
+별점:
+<span class="star_rating">
+    <a href="#" class="on">★</a>
+    <a href="#" class="on">★</a>
+    <a href="#" class="on">★</a>
+    <a href="#" class="on">★</a>
+    <a href="#" class="on">★</a>
+</span>
+<input type="hidden" name="pstar" value="" id="pstarhidden">
+<span id="pstar"></span><br>
 이용시간:
 <select name="startTime">
     <option value="">시간선택</option>

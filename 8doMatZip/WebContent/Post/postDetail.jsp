@@ -195,7 +195,7 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
     <tr>
         <td>
            <span class="form-inline" role="form">               
-              <textarea id="commentParentText" class="form-control col-lg-12" style="width:100%;height:30px" rows="4"></textarea><br><br>
+              <textarea id="commentParentText" class="form-control col-lg-12" rows="4" style="resize: none; width:100%;height:30px" required="required"></textarea><br><br>
            	  <span style='float:right'><input type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-default" value="댓글달기"></span>
            </span>
         </td>

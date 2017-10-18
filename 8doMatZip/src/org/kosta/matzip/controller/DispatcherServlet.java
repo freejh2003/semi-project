@@ -42,7 +42,14 @@ public class DispatcherServlet extends HttpServlet {
 	 */  
 	public void requestProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
-			String command=request.getParameter("command");
+			String command=null;
+			if(request.getContentType() != null && 
+			    request.getContentType().toLowerCase().indexOf("multipart/form-data") > -1) {				
+				command="reviewregister";
+				System.out.println("파일업로드요청 "+command);
+			}else {
+				command=request.getParameter("command");
+		    }
 			Controller c=HandlerMapping.getInstance().create(command);
 			String url=c.execute(request, response);			
 			if(url.startsWith("redirect:"))
@@ -53,5 +60,5 @@ public class DispatcherServlet extends HttpServlet {
 			e.printStackTrace();
 			response.sendRedirect("error.jsp");
 		}			
-	}
+	}	
 }

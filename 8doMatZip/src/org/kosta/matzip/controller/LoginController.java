@@ -21,8 +21,8 @@ public class LoginController implements Controller {
 	         HttpSession session=request.getSession();
 	         session.setAttribute("mvo", vo);
 	         //session.setAttribute("pnoList",new ArrayList<String>());
-	         //path="redirect:DispatcherServlet?command=showmap";
-	         path="Member/goCurrentPage.jsp";
+	         path="redirect:DispatcherServlet?command=showmap";
+	         //path="Member/goCurrentPage.jsp";
 	      }
 		return path;
 	}

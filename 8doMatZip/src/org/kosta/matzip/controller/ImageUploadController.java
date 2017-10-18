@@ -28,10 +28,10 @@ public class ImageUploadController implements Controller {
 				PostVO pvo=new PostVO();
 				// 다수의 파일을 쓸때는 getFilesystemNames 를 쓰면 된다.
 				ArrayList<String> pictures=PostDAO.getInstance().findImageByPno(pno);
-				pvo.setPictures(pictures);
-				System.out.println("db insert전 pvo:"+pvo);
+				//pvo.setPictures(pictures);
+				//System.out.println("db insert전 pvo:"+pvo);
 				PostDAO.getInstance().registerImage(pno, pictures);
-				request.setAttribute("pictures", pictures);
+				//request.setAttribute("pictures", pictures);
 				return "redirect:DispatcherServlet?command=postDetail&pno="+pno;
 			}
 		}
