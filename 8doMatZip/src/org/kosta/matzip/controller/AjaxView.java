@@ -34,5 +34,11 @@ public class AjaxView extends HttpServlet {
 		out.print(request.getAttribute("responseBody").toString());
 		out.close();
 	}
-
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.print(request.getAttribute("responseBody").toString());
+		out.close();
+	}
 }

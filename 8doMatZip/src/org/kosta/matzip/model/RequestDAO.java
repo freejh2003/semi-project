@@ -103,4 +103,30 @@ public class RequestDAO {
 			closeAll(rs,pstmt,con);
 		}	
 	}// reqdelete
+	public RequestVO selectReqByNo(String reqno) throws SQLException {
+		RequestVO rvo=new RequestVO();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try{
+			con=getConnection(); 
+			String sql="SELECT reqno,mid,reqcontent,to_char(reqdate,'YYYY.MM.DD') from request where reqno=?";
+			//sql.append("order by pno desc");
+			pstmt=con.prepareStatement(sql);		
+			pstmt.setString(1, reqno);
+			//pstmt.setInt(1,bean.getStartRowNumber());
+			//pstmt.setInt(2,bean.getEndRowNumber());
+			rs=pstmt.executeQuery();
+			if(rs.next()){		
+				rvo=new RequestVO();
+				rvo.setReqno(rs.getString(1));
+				rvo.setMid(rs.getString(2));
+				rvo.setReqcontent(rs.getString(3));
+				rvo.setReqdate(rs.getString(4));
+			}			
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return rvo;
+	}//selectreq
 }//class

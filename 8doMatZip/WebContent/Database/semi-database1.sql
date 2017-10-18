@@ -98,7 +98,7 @@ insert into request(reqno,mid,reqcontent,reqdate)values(req_seq.nextval,'bbbbb',
 select * from request order by reqno desc;
 delete from request where reqno=2;
 SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') FROM request r , member m WHERE m.mid=r.mid order by r.reqdate desc;	
-
+SELECT reqno,mid,reqcontent,to_char(reqdate,'YYYY.MM.DD') from request where reqno=8;
 
 create table post_myfav(
 	mid varchar2(100) not null,

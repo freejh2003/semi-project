@@ -6,25 +6,40 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
-	$(document).ready(function(){
-		$("#requesttable tbody #updaterequest").hide();
-		$("#requpdateBtn").click(function(){
-			$("#updaterequest").show();
-			$("#reqcomlist").hide();
-		}); //requpdate
-		$("#requpdatecancelBtn").click(function(){
-			$("#updaterequest").hide();
-			$("#reqcomlist").show();
-			return false;
-		});// cancel
-		$("#requpdateokBtn").click(function(){
-			$("#updaterequest").hide();
-			$("#reqcomlist").show();
-			
-			return false;
-		});
-	});
+	var reqno="";
+	var ajaxval="";
+	$(document).ready(function() {
+		$("#requesttable :button[name=updateBtn]").click(function() {
+			reqno=$(this).parent().parent().children().eq(0).html();
+			ajaxreqno=($(this).parent().parent().index())+1;
+ 		$.ajax({
+ 			type:"post",
+			url:"DispatcherServlet",
+			data:"command=requestselect&reqno="+reqno,
+			dataType:"json",
+			success:function(data){
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html('<textarea class="form-control" name="reqcontent" placeholder="Contents" rows="5" required="required" style="resize: none;">'+data.reqcontent+'</textarea>');
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateExecuteBtn" class="btn btn-default" type="button">수정완료</button>');
+			}
+		}); //ajax
+		});//click
+		$("#requesttable").on("click","button[name='updateExecuteBtn']",function() {
+			alert($(this).parent().parent().children().eq(0).html());
+			reqno=$(this).parent().parent().children().eq(0).html();
+			var reqcon=$(this).parent().siblings().eq(2).children("textarea").val();
+			ajaxreqno=($(this).parent().parent().index())+1;
+  		$.ajax({
+ 			type:"post",
+			url:"DispatcherServlet",
+			data:"command=requestupdate&reqno="+reqno+"&reqcontent="+reqcon,
+			dataType:"json",
+			success:function(data){
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html('${reqpost.reqcontent }');
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateBtn" class="btn btn-default">수정</button>');
+			}
+		});  //ajax
+		});//click2
+	});//ready
 </script>
 
 <table class="table table-bordered" id="requesttable">
@@ -35,46 +50,32 @@
 	</tr>
 </thead>
 <tbody>
-<c:choose>
-<c:when test="${fn:length(requestScope.rlist)!=0}">
-<c:forEach items="${requestScope.rlist}" var="reqpost">
+	<c:choose>
+	<c:when test="${fn:length(requestScope.rlist)!=0}">
+	<c:forEach items="${requestScope.rlist}" var="reqpost">
 						<tr>
 							<td>${reqpost.reqno}</td>
 							<td>${reqpost.mid }</td>
 							<td>${reqpost.reqcontent }</td>
 							<td>${reqpost.reqdate}</td>
 							<c:if test="${sessionScope.mvo.mid==reqpost.mid}">
-								<td><a href="#" type="button" class="btn btn-default" id="requpdateBtn">수정</a></td>
+								<td><button type="button" name="updateBtn" class="btn btn-default">수정</button></td>
 								<td><a
 									href="DispatcherServlet?command=requestdelete&reqno=${reqpost.reqno }"
 									type="button" class="btn btn-default">삭제</a></td>
 							</c:if>
 						</tr>			
-					<tr>
-						<td>${reqpost.reqno}</td>
-						<td>${reqpost.mid }</td>
-						<td id="afterupdate"><textarea class="form-control"
-								name="reqcontent" placeholder="Contents" rows="5"
-								required="required" style="resize: none;">${reqpost.reqcontent }</textarea></td>
-						<td>${reqpost.reqdate}</td>
-						<td><a
-							href="DispatcherServlet?command=requestupdate&reqno=${reqpost.reqno }"
-							type="button" class="btn btn-default" id="requpdateokBtn">수정</a></td>
-						<td><a href="#" type="button" class="btn btn-default" id="requpdatecancelBtn">취소</a></td>
-					</tr>
 				</c:forEach>
-</c:when>
-<c:otherwise>
+	</c:when>
+	<c:otherwise>
 	<tr>
 		<td colspan="9" align="center">맛집 리뷰 요청이 없습니다.</td>
 	</tr>
-</c:otherwise>
-</c:choose>
+	</c:otherwise>
+	</c:choose>
 </tbody>
 </table>
 
-
-       
 
 <c:if test="${sessionScope.mvo!=null}">
 <form method="post" action="DispatcherServlet">
