@@ -17,7 +17,7 @@ public class PagingBean {
 	/**
 	 * 페이지당 게시물수: 한 페이지에 보여줄 게시물 최대수
 	 */
-	private int postCountPerPage=5;
+	private int postCountPerPage=10;
 	/**
 	 * 페이지 그룹당 페이지: 목록페이지 하단부에 제공할 페이지 수
 	 */

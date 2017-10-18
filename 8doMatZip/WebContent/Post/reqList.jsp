@@ -100,3 +100,29 @@
 </table>
 </form>
 </c:if>
+
+<ul class="pagination justify-content-center">
+		<c:set value="${postlist.getPagingBean() }" var="paging" />
+		<c:if test="${paging.isNextPageGroup() }">
+			<li class="page-item"><a class="page-link"
+				href="DispatcherServlet?command=boardlist&np=${paging.getEndPageOfPageGroup()+1}">Previous</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${paging.getStartPageOfPageGroup()}" end="${paging.getEndPageOfPageGroup()}" var="num" varStatus="loop">
+			<c:choose>
+				<c:when test="${paging.getNowPage() != (loop.end - loop.count + 1) }">
+					<li class="page-item active"><a class="page-link"
+						href="DispatcherServlet?command=boardlist&np=${loop.end - loop.count + 1}">${loop.end - loop.count + 1}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled"><a class="page-link"
+						href="#">${loop.end - loop.count + 1}</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${paging.isPreviousPageGroup() }">
+			<li class="page-item"><a class="page-link"
+				href="DispatcherServlet?command=boardlist&np=${paging.getStartPageOfPageGroup()-1}">Next</a>
+			</li>
+		</c:if>
+	</ul>
