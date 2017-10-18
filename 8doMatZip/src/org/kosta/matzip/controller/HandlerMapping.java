@@ -42,6 +42,8 @@ public class HandlerMapping {
 			c = new RequestDeleteController();
 		}	else if (command.equals("requestselect")) {
 			c = new RequestSelectController();
+		}	else if (command.equals("requestupdate")) {
+			c = new RequestUpdateController();
 		}
 		return c;
 	}

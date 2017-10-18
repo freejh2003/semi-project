@@ -1,5 +1,7 @@
 package org.kosta.matzip.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +16,8 @@ public class RequestSelectController implements Controller {
 		String reqno=request.getParameter("reqno");
 		RequestVO rvo=RequestDAO.getInstance().selectReqByNo(reqno);
 		JSONObject obj = new JSONObject(rvo);
-
+		ArrayList<RequestVO> rlist=RequestDAO.getInstance().getRequestList();
+		request.setAttribute("rlist",rlist);
 		request.setAttribute("responseBody", obj);
 		return "AjaxView";
 	}

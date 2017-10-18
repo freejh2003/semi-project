@@ -8,8 +8,9 @@
 <script type="text/javascript">
 	var reqno="";
 	var ajaxval="";
+	var reqcon="";
 	$(document).ready(function() {
-		$("#requesttable :button[name=updateBtn]").click(function() {
+		$("#requesttable").on("click","button[name='updateBtn']",function() {
 			reqno=$(this).parent().parent().children().eq(0).html();
 			ajaxreqno=($(this).parent().parent().index())+1;
  		$.ajax({
@@ -24,9 +25,8 @@
 		}); //ajax
 		});//click
 		$("#requesttable").on("click","button[name='updateExecuteBtn']",function() {
-			alert($(this).parent().parent().children().eq(0).html());
 			reqno=$(this).parent().parent().children().eq(0).html();
-			var reqcon=$(this).parent().siblings().eq(2).children("textarea").val();
+			reqcon=$(this).parent().siblings().eq(2).children("textarea").val();
 			ajaxreqno=($(this).parent().parent().index())+1;
   		$.ajax({
  			type:"post",
@@ -34,7 +34,7 @@
 			data:"command=requestupdate&reqno="+reqno+"&reqcontent="+reqcon,
 			dataType:"json",
 			success:function(data){
-				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html('${reqpost.reqcontent }');
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html(reqcon);
 				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateBtn" class="btn btn-default">수정</button>');
 			}
 		});  //ajax

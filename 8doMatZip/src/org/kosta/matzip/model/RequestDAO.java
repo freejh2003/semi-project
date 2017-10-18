@@ -129,4 +129,18 @@ public class RequestDAO {
 		}
 		return rvo;
 	}//selectreq
+	public void requestUpdate(String reqno, String reqcontent) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try{
+			con=getConnection(); 
+			String sql="update request set reqcontent=? where reqno=?";
+			pstmt=con.prepareStatement(sql);		
+			pstmt.setString(1, reqcontent);
+			pstmt.setString(2, reqno);
+			pstmt.executeUpdate();
+		}finally{
+			closeAll(pstmt,con);
+		}	
+	}// requpdate
 }//class

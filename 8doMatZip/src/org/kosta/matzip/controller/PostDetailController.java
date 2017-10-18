@@ -15,15 +15,17 @@ public class PostDetailController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String pno = request.getParameter("pno");
-		MemberVO mvor=new MemberVO();
+		//MemberVO mvor=new MemberVO();
 		ArrayList<String> images = PostDAO.getInstance().findImageByPno(pno);
 		PostVO pvo = PostDAO.getInstance().findPostByPno(pno);	
 		pvo.setPictures(images);
-		HttpSession session=request.getSession(false);
+		/*HttpSession session=request.getSession(false);
 		if(session!=null) {
+			System.out.println(pvo.toString());
 			mvor.getRecentbean().addItem(pvo);
-			session.setAttribute("mvor", mvor.getRecentbean().getRecentList()); 
-		}
+			ArrayList<PostVO> mvorlist=mvor.getRecentbean().getRecentList();
+			session.setAttribute("mvor", mvorlist); 
+		}*/
 		request.setAttribute("pvo",pvo);
 		request.setAttribute("url","../Post/postDetail.jsp");
 		return "Template/home.jsp";

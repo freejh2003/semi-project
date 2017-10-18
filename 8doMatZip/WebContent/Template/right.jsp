@@ -76,6 +76,7 @@
           <p></p>
         </div>      
       </div>
+      </div>
 	<c:forEach items="${pvoinfo}" var="pvoinfolist" begin="1">
       <div class="item">
         <img src="${pvoinfolist.pictures }" alt="${pvoinfolist.pno }" width="400" height="700">
