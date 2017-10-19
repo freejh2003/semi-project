@@ -74,6 +74,7 @@ public class RequestDAO {
 		}
 		return rlist;
 	}//getallreqlist
+	
 	public void getRequestResgister(String mid, String reqcontent) throws SQLException{
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -143,4 +144,49 @@ public class RequestDAO {
 			closeAll(pstmt,con);
 		}	
 	}// requpdate
+	
+	public ArrayList<RequestVO> getAllPostList(int start, int end) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<RequestVO> list=new ArrayList<RequestVO>();
+		RequestVO rvo=new RequestVO();
+		try{
+			con=getConnection();
+			StringBuilder sql=new StringBuilder();
+			sql.append("SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') ");
+			sql.append("FROM (select row_number() over(order by reqdate desc) rnum, reqno, mid, reqcontent, reqdate from request) r, MEMBER m ");
+			sql.append("WHERE (rnum between ? and ?) and (m.mid=r.mid) ");
+			sql.append("order by reqdate desc");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				rvo=new RequestVO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+				list.add(rvo);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return list;
+	}
+	public int TotalCount() throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int tc=0;
+		try{
+			con=getConnection();
+			String sql="select count(*) from request";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				tc=rs.getInt(1);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return tc;
+	}
 }//class

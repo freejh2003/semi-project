@@ -517,4 +517,49 @@ public class PostDAO {
 	      closeAll(rs,pstmt,con);
 	      }
 	   }//method
+	
+	public void AddFavorite(String mid, String pno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="insert into post_myfav(mid, pno) values(?,?)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, pno);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}
+	public ArrayList<PostVO> MyFavoriteView(String mid) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		PostVO pvo=null;
+		ArrayList<PostVO> list=null;
+		try {
+			list=new ArrayList<PostVO>();
+			con=getConnection();
+			StringBuilder sql=new StringBuilder();
+			sql.append("SELECT p.pno, p.ptitle, p.pstar, p.plike, p.phit");
+			sql.append(" FROM post_myfav pm, post p");
+			sql.append(" WHERE pm.mid=? and pm.pno=p.pno ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, mid);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				pvo=new PostVO();
+			pvo.setPno(rs.getString(1));
+			pvo.setPtitle(rs.getString(2));
+			pvo.setPstar(rs.getInt(3));
+			pvo.setPlike(rs.getInt(4));
+			pvo.setPhit(rs.getInt(5));
+			list.add(pvo);
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return list;
+	}
 }//class

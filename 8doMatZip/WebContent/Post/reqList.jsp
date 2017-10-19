@@ -41,7 +41,7 @@
 		});//click2
 	});//ready
 </script>
-
+<c:set value="${requestScope.lv}" var="paging" />
 <table class="table table-bordered" id="requesttable">
 <thead>
 	<tr>
@@ -51,8 +51,8 @@
 </thead>
 <tbody>
 	<c:choose>
-	<c:when test="${fn:length(requestScope.rlist)!=0}">
-	<c:forEach items="${requestScope.rlist}" var="reqpost">
+	<c:when test="${fn:length(requestScope.lv.list)!=0}">
+	<c:forEach items="${paging.list}" var="reqpost">
 						<tr>
 							<td>${reqpost.reqno}</td>
 							<td>${reqpost.mid }</td>
@@ -102,27 +102,27 @@
 </c:if>
 
 <ul class="pagination justify-content-center">
-		<c:set value="${postlist.getPagingBean() }" var="paging" />
-		<c:if test="${paging.isNextPageGroup() }">
+		<c:set value="${paging.getPagingbean()}" var="pagingbean" />
+		<c:if test="${pagingbean.isPreviousPageGroup() }">
 			<li class="page-item"><a class="page-link"
-				href="DispatcherServlet?command=boardlist&np=${paging.getEndPageOfPageGroup()+1}">Previous</a>
+				href="DispatcherServlet?command=requestboard&np=${pagingbean.getStartPageOfPageGroup()-1}">Previous</a>
 			</li>
 		</c:if>
-		<c:forEach begin="${paging.getStartPageOfPageGroup()}" end="${paging.getEndPageOfPageGroup()}" var="num" varStatus="loop">
+		<c:forEach begin="${pagingbean.getStartPageOfPageGroup()}" end="${pagingbean.getEndPageOfPageGroup()}" var="num" step="1">
 			<c:choose>
-				<c:when test="${paging.getNowPage() != (loop.end - loop.count + 1) }">
+				<c:when test="${pagingbean.getNowPage() != num }">
 					<li class="page-item active"><a class="page-link"
-						href="DispatcherServlet?command=boardlist&np=${loop.end - loop.count + 1}">${loop.end - loop.count + 1}</a></li>
+						href="DispatcherServlet?command=requestboard&np=${num}">${num}</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item disabled"><a class="page-link"
-						href="#">${loop.end - loop.count + 1}</a></li>
+						href="#">${num}</a></li>
 				</c:otherwise>
 			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.isPreviousPageGroup() }">
+	</c:forEach>
+		<c:if test="${pagingbean.isNextPageGroup() }">
 			<li class="page-item"><a class="page-link"
-				href="DispatcherServlet?command=boardlist&np=${paging.getStartPageOfPageGroup()-1}">Next</a>
+				href="DispatcherServlet?command=requestboard&np=${pagingbean.getEndPageOfPageGroup()+1}">Next</a>
 			</li>
 		</c:if>
 	</ul>

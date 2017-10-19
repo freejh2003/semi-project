@@ -174,7 +174,7 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 		<a href="DispatcherServlet?command=updatepostview&pno=${pvo.pno}"><input type="button"  class="btn" value="수정" id="updatepost"></a>
 		<a href="DispatcherServlet?command=deletepost&pno=${pvo.pno}"><input type="button"  class="btn" value="삭제" id="deletepost" onclick="return deletecheck()"></a>
 	</c:if>
-<a href="Post/goPrevPage.jsp"><button type="button" id="list" class="btn btn-default">목록</button></a>
+<a href="DispatcherServlet?command=sortbyloc&loc=${pvo.loc }&sigungu=${pvo.sigungu}"><button type="button" id="list" class="btn btn-default">목록</button></a>
 </span>
 <br><br><br>[댓글리스트]
 <table id="commentTable" class="table table-condensed">

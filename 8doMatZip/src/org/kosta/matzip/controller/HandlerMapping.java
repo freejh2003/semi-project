@@ -64,6 +64,10 @@ public class HandlerMapping {
 			c= new MostRecentPostController();
 		}else if(command.equals("imageupload")) {
 			c = new ImageUploadController();
+		} else if (command.equals("addfavorite")) {
+			c = new AddFavoriteController();
+		} else if (command.equals("myfavoriteview")) {
+			c = new MyFavoriteViewController();
 		}
 		return c;
 	}

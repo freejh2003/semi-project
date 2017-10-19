@@ -100,6 +100,10 @@ delete from request where reqno=2;
 SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') FROM request r , member m WHERE m.mid=r.mid order by r.reqdate desc;	
 SELECT reqno,mid,reqcontent,to_char(reqdate,'YYYY.MM.DD') from request where reqno=8;
 
+SELECT r.reqno,m.mid,r.reqcontent,to_char(reqdate,'YYYY.MM.DD') 
+FROM (select row_number() over(order by reqdate asc) rnum, reqno, mid, reqcontent, reqdate from request) r, MEMBER m 
+WHERE (rnum between 1 and 16) and (m.mid=r.mid) order by reqdate desc; 
+
 create table post_myfav(
 	mid varchar2(100) not null,
 	pno varchar2(100) not null,
