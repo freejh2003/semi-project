@@ -212,6 +212,15 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 <b>운영시간</b>&nbsp;&nbsp;${pvo.ptime }<br><br>
 <b>가격</b>&nbsp;&nbsp;${pvo.pprice }<br><br>
 <b>기타</b>&nbsp;&nbsp;${pvo.petc }<br><br>
+
+<c:if test="${sessionScope.mvo!=null}">
+<form action="DispatcherServlet">
+<input type="hidden" name="command" value="addfavorite">
+<input type="hidden" name="mid" value="${sessionScope.mvo.mid}">
+<input type="hidden" name="pno" value="${requestScope.pvo.pno}">
+	<input type="submit" value="관심맛집등록">
+</form>
+</c:if>
 </div>
 </div>
 

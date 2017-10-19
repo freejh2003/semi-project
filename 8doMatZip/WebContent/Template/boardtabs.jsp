@@ -26,7 +26,7 @@
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       마이페이지 <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">관심맛집</a></li>
+        <li><a href="DispatcherServlet?command=myfavoriteview&mid=${sessionScope.mvo.mid}&pno=${requestScope.pvo.pno}">관심맛집</a></li>
         <li><a href="DispatcherServlet?command=mupdateview&mid=${sessionScope.mvo.mid}">회원정보수정</a></li>
       </ul>
     </div>
