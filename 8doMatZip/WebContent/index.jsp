@@ -3,4 +3,3 @@
 <jsp:forward page="DispatcherServlet">
 	<jsp:param value="showmap" name="command"/>
 </jsp:forward>
-

@@ -41,6 +41,7 @@
 		});//click2
 	});//ready
 </script>
+
 <c:set value="${requestScope.lv}" var="paging" />
 <table class="table table-bordered" id="requesttable">
 <thead>

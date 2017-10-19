@@ -27,6 +27,7 @@ insert into location (locno,loc, sigungu) values (locno_seq.nextval,'제주특�
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'서울특별시','강동구');
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'서울특별시','강남구');
 insert into location (locno,loc, sigungu) values (locno_seq.nextval,'서울특별시','송파구');
+delete from location;
 
 select * from location;
 
@@ -63,6 +64,11 @@ create table post( --post table
 	constraint fk_post_member foreign key(mid) references member(mid),
 	constraint fk_post_location foreign key(locno) references location(locno)
 )
+SELECT p.pno,p.ptitle,to_char(pdate,'YYYY.MM.DD'),p.phit,l.loc,l.sigungu,p.mid,p.locno 
+FROM (select row_number() over(order by pdate desc) rnum, pno, ptitle, pdate, phit, mid,locno from post) p, location l 
+WHERE (rnum between 1 and 10) and (p.locno=l.locno) 
+order by pdate desc;
+
 drop sequence req_seq;
 drop sequence pno_seq;
 drop sequence com_seq;
@@ -72,7 +78,7 @@ create sequence com_seq;
 create sequence req_seq;
 
 
-select * from post;
+select * from post where locno=4;
 delete from post;
 create table comments(
 	comno varchar2(100) primary key,
@@ -111,7 +117,12 @@ create table post_myfav(
 	constraint fk_pmyfav_post foreign key(pno) references post(pno),
 	constraint pk_member_post primary key (mid, pno)
 )
+select count(*) from post_myfav where mid='aaaaa';
 
+SELECT p.pno, p.ptitle, p.pstar, p.plike, p.phit 
+FROM (select row_number() over(order by pno desc) rnum, pno, ptitle, pstar, plike, phit from post) p, post_myfav pm 
+WHERE (rnum between ? and ?) and (pm.pno=p.pno) 
+order by rnum desc;
 
 create table imagepath(
 	pno varchar2(100) not null,
@@ -122,8 +133,8 @@ create table imagepath(
 select * from post;
 insert into imagepath(pno,ipath)values('1','초밥1.png');
 insert into imagepath(pno,ipath)values('1','초밥2.png');
-delete from imagepath where pno='23'
-
+delete from imagepath where pno='1'
+select * from imagepath;
 create table QNA(
 	mid varchar2(100) not null,
 	answer varchar2(100) not null,

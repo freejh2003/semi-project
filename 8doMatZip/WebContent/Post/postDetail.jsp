@@ -111,7 +111,6 @@ function deletecheck(){
 </script>
 <div class="container">
 <div class="col-sm-8">
-<a href="index.jsp">home</a><br>
 ${sessionScope.loc } > ${sessionScope.sigungu}
 <br>
 <table class="table table-bordered">
@@ -122,15 +121,15 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 	</thead>
 	<tbody>
       <tr>
-      	<td>${pvo.ptitle }</td>
-     	<td>${pvo.pdate }</td>
-     	<td>${pvo.mid }</td>
-      	<td>${pvo.phit }</td>
+      	<td>${requestScope.pvo.ptitle }</td>
+     	<td>${requestScope.pvo.pdate }</td>
+     	<td>${requestScope.pvo.mid }</td>
+      	<td>${requestScope.pvo.phit }</td>
       </tr>
 	<tr>
 		<td colspan="4">
 			<div class="cycle-slideshow" data-cycle-timeout=2000>
-			<c:forEach items="${pvo.pictures }" var="image">
+			<c:forEach items="${requestScope.pvo.pictures }" var="image">
 			<img src="pictures/${image}" width="200" height="150">
 			</c:forEach>
 			</div>
@@ -144,7 +143,7 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 </thead>
 <tbody>
 	<tr>
-      	<td colspan="4">${pvo.pcontent }</td>
+      	<td colspan="4">${requestScope.pvo.pcontent }</td>
 	</tr>
 </tbody>
 
@@ -157,24 +156,24 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 	<tr>
       	<td colspan="4">
       	<span class="star_rating"> 
-      		<c:forEach begin="1" end="${pvo.pstar }">
+      		<c:forEach begin="1" end="${requestScope.pvo.pstar }">
     			<a href="#" class="on">★</a>
 			</c:forEach>
-			<c:forEach begin="1" end="${5-pvo.pstar }">
+			<c:forEach begin="1" end="${5-requestScope.pvo.pstar }">
     			<a href="#">★</a>
    			</c:forEach>
        </span>
-       &nbsp;${pvo.pstar }
+       &nbsp;${requestScope.pvo.pstar }
        </td>
 	</tr>
 </tbody>
 </table>
 <span style='float:right'>
 	<c:if test="${sessionScope.mvo.mid == requestScope.pvo.mid }">
-		<a href="DispatcherServlet?command=updatepostview&pno=${pvo.pno}"><input type="button"  class="btn" value="수정" id="updatepost"></a>
-		<a href="DispatcherServlet?command=deletepost&pno=${pvo.pno}"><input type="button"  class="btn" value="삭제" id="deletepost" onclick="return deletecheck()"></a>
+		<a href="DispatcherServlet?command=updatepostview&pno=${requestScope.pvo.pno}"><input type="button"  class="btn" value="수정" id="updatepost"></a>
+		<a href="DispatcherServlet?command=deletepost&pno=${requestScope.pvo.pno}"><input type="button"  class="btn" value="삭제" id="deletepost" onclick="return deletecheck()"></a>
 	</c:if>
-<a href="DispatcherServlet?command=sortbyloc&loc=${pvo.loc }&sigungu=${pvo.sigungu}"><button type="button" id="list" class="btn btn-default">목록</button></a>
+<a href="DispatcherServlet?command=sortbyloc&loc=${requestScope.pvo.loc }&sigungu=${requestScope.pvo.sigungu}"><button type="button" id="list" class="btn btn-default">목록</button></a>
 </span>
 <br><br><br>[댓글리스트]
 <table id="commentTable" class="table table-condensed">
@@ -194,15 +193,17 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
    <table class="table table-condensed">
     <tr>
         <td>
+        <c:if test="${sessionScope.mvo!=null}">
            <span class="form-inline" role="form">               
               <textarea id="commentParentText" class="form-control col-lg-12" rows="4" style="resize: none; width:100%;height:30px" required="required"></textarea><br><br>
            	  <span style='float:right'><input type="button" id="commentParentSubmit" name="commentParentSubmit" class="btn btn-default" value="댓글달기"></span>
            </span>
+        </c:if>
         </td>
     </tr>
   </table>
-
 </div>
+
 <div class="col-sm-4">
 <input type="button" class="btn btn-primary"value="좋아요" id="like">
 &nbsp;&nbsp;<span id="plike">${requestScope.pvo.plike}</span>

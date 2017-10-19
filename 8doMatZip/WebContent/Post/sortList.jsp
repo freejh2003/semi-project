@@ -4,6 +4,7 @@
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container">
 ${sessionScope.loc } > ${sessionScope.sigungu} <br>
+<c:set value="${sessionScope.sortlist}" var="locpaging" />
 <table class="table table-bordered">
 <thead>
 	<tr>
@@ -13,8 +14,8 @@ ${sessionScope.loc } > ${sessionScope.sigungu} <br>
 </thead>
 <tbody>
 <c:choose>
-<c:when test="${fn:length(sessionScope.sortlist)!=0}">
-<c:forEach items="${sessionScope.sortlist }" var="locpost">
+<c:when test="${fn:length(sessionScope.sortlist.list)!=0}">
+<c:forEach items="${locpaging.list}" var="locpost">
       <tr>
       	<td>${locpost.pno }</td>
         <td><a href="DispatcherServlet?command=postdetail&pno=${locpost.pno }">${locpost.ptitle }</a></td>       
@@ -32,4 +33,31 @@ ${sessionScope.loc } > ${sessionScope.sigungu} <br>
 </c:choose>
 </tbody>
 </table>
+
+
+<ul class="pagination justify-content-center">
+		<c:set value="${locpaging.getPagingbean()}" var="locpagingbean" />
+		<c:if test="${locpagingbean.isPreviousPageGroup() }">
+			<li class="page-item"><a class="page-link"
+				href="DispatcherServlet?command=sortbyloc&np=${locpagingbean.getStartPageOfPageGroup()-1}&loc=${sessionScope.loc }&sigungu=${sessionScope.sigungu}">Previous</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${locpagingbean.getStartPageOfPageGroup()}" end="${locpagingbean.getEndPageOfPageGroup()}" var="num" step="1">
+			<c:choose>
+				<c:when test="${locpagingbean.getNowPage() != num }">
+					<li class="page-item active"><a class="page-link"
+						href="DispatcherServlet?command=sortbyloc&np=${num}&loc=${sessionScope.loc }&sigungu=${sessionScope.sigungu}">${num}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled"><a class="page-link"
+						href="#">${num}</a></li>
+				</c:otherwise>
+			</c:choose>
+	</c:forEach>
+		<c:if test="${locpagingbean.isNextPageGroup() }">
+			<li class="page-item"><a class="page-link"
+				href="DispatcherServlet?command=sortbyloc&np=${locpagingbean.getEndPageOfPageGroup()+1}&loc=${sessionScope.loc }&sigungu=${sessionScope.sigungu}">Next</a>
+			</li>
+		</c:if>
+	</ul>
 </div>

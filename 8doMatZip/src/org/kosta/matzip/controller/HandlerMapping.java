@@ -68,7 +68,12 @@ public class HandlerMapping {
 			c = new AddFavoriteController();
 		} else if (command.equals("myfavoriteview")) {
 			c = new MyFavoriteViewController();
+		} else if (command.equals("allPostView")) {
+			c = new AllPostViewController();
+		} else if (command.equals("myfavdelete")) {
+			c = new MyFavDeleteController();
 		}
+		
 		return c;
 	}
 }

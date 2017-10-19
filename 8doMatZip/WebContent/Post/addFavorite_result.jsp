@@ -4,6 +4,5 @@
 <!DOCTYPE html>
 <script type="text/javascript">
 	alert("관심맛집 리스트에 추가하였습니다.");
-	location.href="../index.jsp";
-	location.href="../index.jsp";
+	location.href="../Post/goPrevPage.jsp";
 </script>

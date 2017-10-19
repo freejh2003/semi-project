@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bootstrap Example</title>
+  <title>보드</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,15 +18,15 @@
 <div class="container">
   <div class="btn-group">
   	<a href="DispatcherServlet?command=showmap" class="btn btn-primary">HOME</a>
-    <button type="button" class="btn btn-primary">전체</button>
-        <a href="DispatcherServlet?command=reviewregisterView" class="btn btn-primary">리뷰등록</a>
+    <a href="DispatcherServlet?command=allPostView" class="btn btn-primary">전체</a>
+    <a href="DispatcherServlet?command=reviewregisterView" class="btn btn-primary">리뷰작성</a>
     <a href="DispatcherServlet?command=requestboard" class="btn btn-primary">요청</a>
     <c:if test="${sessionScope.mvo!=null}">
     <div class="btn-group">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       마이페이지 <span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="DispatcherServlet?command=myfavoriteview&mid=${sessionScope.mvo.mid}&pno=${requestScope.pvo.pno}">관심맛집</a></li>
+        <li><a href="DispatcherServlet?command=myfavoriteview&mid=${sessionScope.mvo.mid}">관심맛집</a></li>
         <li><a href="DispatcherServlet?command=mupdateview&mid=${sessionScope.mvo.mid}">회원정보수정</a></li>
       </ul>
     </div>

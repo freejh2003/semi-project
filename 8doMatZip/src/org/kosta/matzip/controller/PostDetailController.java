@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import org.kosta.matzip.model.CommentVO;
-import org.kosta.matzip.model.MemberVO;
 import org.kosta.matzip.model.PostDAO;
 import org.kosta.matzip.model.PostVO;
 
@@ -22,6 +21,7 @@ public class PostDetailController implements Controller {
 		pvo.setPictures(images);
 		ArrayList<CommentVO> clist = PostDAO.getInstance().getCommentList(pno);
 		pvo.setCommentList(clist);
+		
 		request.setAttribute("pvo",pvo);
 		request.setAttribute("url","../Post/postDetail.jsp");
 		return "Template/home.jsp";

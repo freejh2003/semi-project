@@ -45,7 +45,7 @@ public class PostDAO {
 		closeAll(pstmt,con);
 	}
 	
-	public ArrayList<PostVO> getPostingList() throws SQLException{
+	public ArrayList<PostVO> getPostingList(int start, int end) throws SQLException{
 		ArrayList<PostVO> plist=new ArrayList<PostVO>();
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -53,13 +53,13 @@ public class PostDAO {
 		try{
 			con=getConnection(); 
 			StringBuilder sql=new StringBuilder();
-			sql.append("SELECT p.pno,p.mid,p.ptitle,p.pcontent,p.pstar,to_char(pdate,'YYYY.MM.DD'),p.phit,p.plike,l.loc,l.sigungu ");
-			sql.append("FROM post p , location l ");
-			sql.append("WHERE p.locno=l.locno ");		
-			//sql.append("order by pno desc");
+			sql.append("SELECT p.pno,p.mid,p.ptitle,p.pcontent,p.pstar,to_char(pdate,'YYYY.MM.DD'),p.phit,p.plike,l.loc,l.sigungu,p.locno ");
+			sql.append("FROM (select row_number() over(order by pdate desc) rnum, pno, mid, ptitle, pcontent, pstar,pdate,phit,plike,locno from post) p, location l ");
+			sql.append("WHERE (rnum between ? and ?) and (p.locno=l.locno) ");
+			sql.append("order by pdate desc");
 			pstmt=con.prepareStatement(sql.toString());		
-			//pstmt.setInt(1,bean.getStartRowNumber());
-			//pstmt.setInt(2,bean.getEndRowNumber());
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()){		
 				PostVO pvo=new PostVO();
@@ -531,8 +531,8 @@ public class PostDAO {
 		}finally {
 			closeAll(pstmt, con);
 		}
-	}
-	public ArrayList<PostVO> MyFavoriteView(String mid) throws SQLException {
+	}//addfav
+	public ArrayList<PostVO> MyFavoriteView(int start, int end) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -542,14 +542,16 @@ public class PostDAO {
 			list=new ArrayList<PostVO>();
 			con=getConnection();
 			StringBuilder sql=new StringBuilder();
-			sql.append("SELECT p.pno, p.ptitle, p.pstar, p.plike, p.phit");
-			sql.append(" FROM post_myfav pm, post p");
-			sql.append(" WHERE pm.mid=? and pm.pno=p.pno ");
+			sql.append("SELECT p.pno, p.ptitle, p.pstar, p.plike, p.phit ");
+			sql.append("FROM (select row_number() over(order by pno desc) rnum, pno, ptitle, pstar, plike, phit from post) p, post_myfav pm ");
+			sql.append("WHERE (rnum between ? and ?) and (pm.pno=p.pno)");
+			sql.append("order by p.pno desc");
 			pstmt=con.prepareStatement(sql.toString());
-			pstmt.setString(1, mid);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				pvo=new PostVO();
+			pvo=new PostVO();
 			pvo.setPno(rs.getString(1));
 			pvo.setPtitle(rs.getString(2));
 			pvo.setPstar(rs.getInt(3));
@@ -561,5 +563,111 @@ public class PostDAO {
 			closeAll(rs, pstmt, con);
 		}
 		return list;
-	}
+	}//myfavview
+	public ArrayList<PostVO> getAllLocPostList(int start, int end,String loc, String sigungu) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<PostVO> sortlist=new ArrayList<PostVO>();
+		PostVO pvo=new PostVO();
+		try{
+			con=getConnection();
+			String locno = findLocNo(loc, sigungu);
+			StringBuilder sql=new StringBuilder();
+			sql.append("SELECT p.pno,p.ptitle,to_char(pdate,'YYYY.MM.DD'),p.phit,l.loc,l.sigungu,p.mid,p.locno ");
+			sql.append("FROM (select row_number() over(order by pdate desc) rnum, pno, ptitle, pdate, phit, mid,locno from post where locno=?) p, location l ");
+			sql.append("WHERE (rnum between ? and ?) and (p.locno=l.locno)");
+			sql.append("order by pdate desc ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, locno);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				pvo=new PostVO();
+				pvo.setPno(rs.getString(1));
+				pvo.setPtitle(rs.getString(2));
+				pvo.setPdate(rs.getString(3));
+				pvo.setPhit(rs.getInt(4));
+				pvo.setLoc(rs.getString(5));
+				pvo.setSigungu(rs.getString(6));
+				pvo.setMid(rs.getString(7));
+				sortlist.add(pvo);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return sortlist;
+	}//allpostpaginglist
+	public int TotalCount(String loc, String sigungu) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int tc=0;
+		try{
+			String locno = findLocNo(loc, sigungu);
+			con=getConnection();
+			String sql="select count(*) from post where locno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, locno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				tc=rs.getInt(1);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return tc;
+	}//tc
+	public int TotalPostCount() throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int tc=0;
+		try{
+			con=getConnection();
+			String sql="select count(*) from post";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				tc=rs.getInt(1);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return tc;
+	}//alltc
+	public int TotalMyFavCount(String mid) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int tc=0;
+		try{
+			con=getConnection();
+			String sql="select count(*) from post_myfav where mid=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				tc=rs.getInt(1);
+			}
+		}finally{
+			closeAll(rs,pstmt,con);
+		}
+		return tc;
+	}//allmyfav
+	public void DeleteFavorite(String mid, String pno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			String sql="delete from post_myfav where mid=? and pno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, pno);
+			pstmt.executeUpdate();
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}//deletefav
 }//class
