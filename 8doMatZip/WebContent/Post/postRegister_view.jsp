@@ -5,8 +5,17 @@
 function checkConfirm() {
 	return confirm("등록 하시겠습니까?");
 }
-
+function checkTime() {
+	var startTime=document.form.startTime;
+	var endTime=document.form.endTime;
+	if(endTime.value<startTime.value){
+		alert("open시간 이후 선택 가능합니다");
+		endTime.value="24:00";
+		
+	}
+}
 </script>
+
 <script type="text/javascript">
 function checkNumber(check_form){
     var numPattern = /([^0-9])/;
@@ -19,6 +28,7 @@ function checkNumber(check_form){
     }
 }
 </script>
+
 <script type="text/javascript">
 $('document').ready(function() {
  var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
@@ -63,6 +73,7 @@ $('document').ready(function() {
  });
 });
 </script>
+
 <script type="text/javascript">
  $(document).ready(function() {
 	 $(".star_rating a").removeClass("on");
@@ -80,6 +91,7 @@ $('document').ready(function() {
 	});
  });//ready
 </script>
+
 <style type="text/css">
 .star_rating {font-size:0; letter-spacing:-4px;}
 .star_rating a {
@@ -93,13 +105,21 @@ $('document').ready(function() {
 .star_rating a:first-child {margin-left:0;}
 .star_rating a.on {color:#ffcc00;}
 </style>
-<form action="DispatcherServlet" method="post" onsubmit="return checkConfirm()" enctype="multipart/form-data">
+
+<div class="panel panel-default" style="padding: 30px;">
+  <div class="panel-body" style="padding: 15px;"><font size="15px">맛집 리뷰 작성</font></div>
+<div align="left" class="form-group" >
+<form action="DispatcherServlet" name="form" method="post" class="form-horizontal" onsubmit="return checkConfirm()" enctype="multipart/form-data">
 <input type="hidden" name="mid" value="${sessionScope.mvo.mid}">
-제목:<input type="text" name="title"><br>
-내용:<input type="text" name="content"><br>
-사진1:<input type="file" name="filename"><br>
-사진2:<input type="file" name="filename2"><br>
-별점:
+<input type="hidden" name="command" value="reviewregister">
+제목 <input type="text" class="form-control" name="title" size="95px" required="required"><br>
+내용
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<textarea name="content" class="form-control" rows="8" cols="100" required="required"></textarea><br><br>
+<!-- 내용:<input type="text" name="content"><br><br> -->
+<span class="glyphicon glyphicon-search"></span>사진1<input type="file" name="filename" required="required"><br>
+<span class="glyphicon glyphicon-search"></span>사진2<input type="file" name="filename2"><br>
+별점&nbsp;
 <span class="star_rating">
     <a href="#" class="on">★</a>
     <a href="#" class="on">★</a>
@@ -108,10 +128,10 @@ $('document').ready(function() {
     <a href="#" class="on">★</a>
 </span>
 <input type="hidden" name="pstar" value="" id="pstarhidden">
-<span id="pstar"></span><br>
-이용시간:
-<select name="startTime">
-    <option value="">시간선택</option>
+<span id="pstar"></span><br><br>
+이용시간&nbsp;
+<select name="startTime" required="required">
+    <option value="">open</option>
     <option value="00:00">00:00</option>
     <option value="01:00">01:00</option>
     <option value="02:00">02:00</option>
@@ -138,8 +158,8 @@ $('document').ready(function() {
     <option value="23:00">23:00</option>
     <option value="24:00">24:00</option>
 </select> &nbsp;&nbsp; ~ &nbsp;&nbsp;
-<select name="endTime">
-  <option value="">시간선택</option>
+<select name="endTime" onchange="return checkTime()" required="required">
+    <option value="24:00">close</option>
     <option value="00:00">00:00</option>
     <option value="01:00">01:00</option>
     <option value="02:00">02:00</option>
@@ -166,9 +186,9 @@ $('document').ready(function() {
     <option value="23:00">23:00</option>
     <option value="24:00">24:00</option>
 </select>
-<br>
-전화 번호:
-<select name="tel1">
+<br><br>
+전화 번호&nbsp;
+<select name="tel1" required="required">
   <option value="">지역 번호</option>
     <option value="02">02</option>
     <option value="031">031</option>
@@ -187,18 +207,24 @@ $('document').ready(function() {
     <option value="063">063</option>
     <option value="064">064</option>
 </select>
-
 &nbsp;-&nbsp;
- <input type="text" name="tel2" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4>
+ <input type="text" name="tel2" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4 required="required">
 &nbsp;-&nbsp;
- <input type="text" name="tel3" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4>
- <br>
-가격:<input type="text" name="price">원<br>
+ <input type="text" name="tel3" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4 required="required">
+ <br><br>
+가격&nbsp;<input type="text" name="price" required="required">원<br><br>
 
-시/도:<select name="loc" id="loc"></select> &nbsp;&nbsp; 시/군/구:<select name="sigungu" id="sigungu"></select>
+시/도:
+<select name="loc" id="loc" required="required"></select>
+&nbsp;&nbsp;
+시/군/구:
+<select name="sigungu" id="sigungu" required="required"></select>
+<br><br>
+
+상세 주소&nbsp;<input type="text" class="form-control" name="address" required="required"><br><br>
+특이 사항&nbsp;<input type="text" class="form-control" name="etc"><br><br>
 <br>
-상세 주소:<input type="text" name="address"><br>
-특이 사항:<input type="text" name="etc"><br>
-<br>
-<input type="submit" value="리뷰 등록">
+<div align="right"><input type="submit" class="btn btn-danger btn-lg" value="리뷰 등록"></div>
 </form>
+</div>
+</div>

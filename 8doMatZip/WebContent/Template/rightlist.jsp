@@ -2,34 +2,22 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<div class="container">
-${requestScope.loc } > ${requestScope.sigungu} <br>
-<table class="table table-bordered">
-<thead>
-	<tr>
-		<th>NO</th><th>제목</th><th>작성일시</th>
-		<th>작성자</th><th>조회수</th>
-	</tr>
-</thead>
-<tbody>
-<c:choose>
-<c:when test="${fn:length(requestScope.sortlist)!=0}">
-<c:forEach items="${requestScope.sortlist }" var="locpost">
-      <tr>
-      	<td>${locpost.pno }</td>
-        <td><a href="DispatcherServlet?command=postdetail&pno=${locpost.pno }">${locpost.ptitle }</a></td>       
-        <td>${locpost.pdate }</td>
-        <td>${locpost.mid }</td>
-        <td>${locpost.phit}</td>
-      </tr>
-   </c:forEach>
-</c:when>
-<c:otherwise>
-	<tr>
-		<td colspan="9" align="center">해당 지역의 맛집 리뷰가 없습니다.</td>
-	</tr>
-</c:otherwise>
-</c:choose>
-</tbody>
-</table>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.cycle2.js"></script>
+<style type="text/css">
+        .floating { position: fixed;
+         right: 60%; top: 280px; margin-right: -700px;
+          text-align:center;
+           width: 120px; }
+</style>
+<div class="floating" style="text-align: right;">
+<b>TOP10</b>
+<div class="cycle-slideshow" cycle-slideshow data-cycle-loader="wait" data-cycle-timeout=2000>
+<div class="cycle-pager"></div>
+<c:forEach items="${requestScope.Top10_Pictures}" var="pictures">
+	<img src="pictures/${pictures}" onclick="window.open('DispatcherServlet?command=imagesearch&ipath=${pictures}')" width="180px" height="250px">
+</c:forEach>
 </div>
+</div>
+
+

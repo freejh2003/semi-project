@@ -4,6 +4,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
+	function checkConfirm() {
+		return confirm("수정 하시겠습니까?");
+	}
  $(document).ready(function() {
 	 $(".star_rating a").removeClass("on");
 	 $( ".star_rating a" ).click(function() {
@@ -34,17 +37,21 @@
 .star_rating a:first-child {margin-left:0;}
 .star_rating a.on {color:#ffcc00;}
 </style>
-
-<form action="DispatcherServlet" method="post">
+<div class="panel panel-default" style="padding: 30px;">
+  <div class="panel-body" style="padding: 15px;"><font size="15px">리뷰작성</font></div>
+<div align="left" class="form-group" >
+<form action="DispatcherServlet" method="post" enctype="multipart/form-data" onsubmit="return checkConfirm()">
 <input type="hidden" name="command" value="updatepost">
 <input type="hidden" name="mid" value="${sessionScope.mvo.mid}">
 <input type="hidden" name="phit" value="${requestScope.updatepvo.phit}">
 <input type="hidden" name="pno" value="${requestScope.updatepvo.pno}">
 
-제목:<input type="text" name="title" value="${requestScope.updatepvo.ptitle }"><br>
-내용:<input type="text" name="content" value="${requestScope.updatepvo.pcontent }"><br>
-사진:<input type="file" name="pictures"><br>
-별점:
+제목 <input type="text"  class="form-control" name="title" value="${requestScope.updatepvo.ptitle }"><br>
+내용
+<textarea name="content" class="form-control" rows="8" cols="100"></textarea><br><br>
+<span class="glyphicon glyphicon-search"></span>사진1<input type="file" name="filename"><br>
+<span class="glyphicon glyphicon-search"></span>사진2<input type="file" name="filename2"><br>
+별점&nbsp;
 <span class="star_rating">
     <a href="#" class="on">★</a>
     <a href="#" class="on">★</a>
@@ -54,7 +61,7 @@
 </span>
 <input type="hidden" name="pstar" value="" id="pstarhidden">
 <span id="pstar"></span><br>
-이용시간:
+이용시간&nbsp;
 <select name="startTime">
     <option value="">시간선택</option>
     <option value="00:00">00:00</option>
@@ -84,8 +91,8 @@
     <option value="24:00">24:00</option>
 </select> &nbsp;&nbsp; ~ &nbsp;&nbsp;
 <select name="endTime">
-  <option value="">시간선택</option>
-    <option value="00:00">00:00</option>
+  <option value="">close</option>
+    <option value="24:00">00:00</option>
     <option value="01:00">01:00</option>
     <option value="02:00">02:00</option>
     <option value="03:00">03:00</option>
@@ -112,7 +119,7 @@
     <option value="24:00">24:00</option>
 </select>
 <br>
-전화번호:
+전화번호&nbsp;
 <select name="tel1">
   <option value="">지역 번호</option>
     <option value="02">02</option>
@@ -148,8 +155,8 @@ function checkNumber(check_form){
  <input type="text" name="tel2" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4>
 &nbsp;-&nbsp;
  <input type="text" name="tel3" size=4  onchange="checkNumber(this.form.elements['number'])" maxlength=4>
- <br>
-가격:<input type="text" name="price" value="${requestScope.updatepvo.pprice }"><br>
+ <br><br>
+가격&nbsp;<input type="text" name="price" value="${requestScope.updatepvo.pprice }"><br>
 <script type="text/javascript">
 $('document').ready(function() {
  var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
@@ -195,11 +202,16 @@ $('document').ready(function() {
 
 });
 </script>
-시/도:<select name="loc" id="loc"></select> &nbsp;&nbsp; 시/군/구:<select name="sigungu" id="sigungu"></select>
-<br>
-주소:<input type="text" name="address" value="${requestScope.updatepvo.paddress }"><br>
+시/도:
+<select name="loc" id="loc"></select>
+&nbsp;&nbsp;
+시/군/구:
+<select name="sigungu" id="sigungu"></select>
+<br><br>
+상세 주소:<input type="text" name="address" value="${requestScope.updatepvo.paddress }"><br>
 특이사항:<input type="text" name="etc" value="${requestScope.updatepvo.petc }"><br>
 <br>
-<input type="submit" value="리뷰 등록">
+<div align="right"><input type="submit" class="btn btn-danger" value="수정 하기"></div>
 </form>
-    
+</div>
+</div>

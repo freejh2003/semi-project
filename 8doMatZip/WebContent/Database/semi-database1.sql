@@ -131,8 +131,16 @@ create table imagepath(
 	constraint pk_imgp_post primary key (pno, ipath)
 )
 select * from post;
-insert into imagepath(pno,ipath)values('1','초밥1.png');
-insert into imagepath(pno,ipath)values('1','초밥2.png');
+insert into imagepath(pno,ipath)values('84','초밥1.png');
+insert into imagepath(pno,ipath)values('87','초밥2.png');
+insert into imagepath(pno,ipath)values('90','Chrysanthemum.jpg');
+insert into imagepath(pno,ipath)values('93','Desert.jpg');
+insert into imagepath(pno,ipath)values('54','Koala.jpg');
+insert into imagepath(pno,ipath)values('57','Penguins.jpg');
+insert into imagepath(pno,ipath)values('60','정훈3test.jpg');
+insert into imagepath(pno,ipath)values('63','정훈3test1.jpg');
+insert into imagepath(pno,ipath)values('66','정훈4.jpg');
+insert into imagepath(pno,ipath)values('69','로고1.png');
 delete from imagepath where pno='1'
 select * from imagepath;
 create table QNA(

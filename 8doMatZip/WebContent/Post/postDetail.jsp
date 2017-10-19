@@ -42,7 +42,7 @@ $(document).ready(function() {
 			url:"DispatcherServlet",
 			data:"command=plikeupdate&pno=${requestScope.pvo.pno}",
 			success:function(data){
-				$("#plike").text(data);	
+				$("#plike").text(data+" 명");	
 			}
 		}); 
 	});	
@@ -52,8 +52,9 @@ $(document).ready(function() {
 <script type="text/javascript">
 	$(document).ready(function() {
 		//제일 하단에 있는 depth1의 댓글을 다는 이벤트
+		
 	    $("#commentParentSubmit").click(function() {
-	        var pText = $("#commentParentText");
+	    	var pText = $("#commentParentText");
 	    	if($.trim(pText.val())==""){
 	    		 alert("내용을 입력하세요.");
 		            pText.focus();
@@ -85,7 +86,7 @@ $(document).ready(function() {
 			}//else
 	    });//댓글달기click
 		
-	    $("#commentTable :button[name=deletecomment]").click(function() {
+	    /* $("#commentTable :button[name=deletecomment]").click(function() {
 	    	var comno = $(this).parent().parent().children().eq(0).html();
 	    	var flag = confirm("댓글을 삭제하시겠습니까?");
 	    	if(flag){
@@ -99,7 +100,24 @@ $(document).ready(function() {
 	    	}else{
 	    		return;
 	    	}
-		});//deleteclick
+		});//deleteclick  */
+		$("#commentTable").on("click","button[name=deletecomment]",function() {
+			
+		    	var comno = $(this).parent().parent().children().eq(0).html();
+		    	var flag = confirm("댓글을 삭제하시겠습니까?");
+		    	if(flag){
+		    	$.ajax({
+					type:"get",
+					url:"DispatcherServlet",
+					data:"command=deletecomment&pno=${pvo.pno}&comno="+comno,
+					dataType:"json",
+				});//ajax
+				location.reload();
+		    	}else{
+		    		return;
+		    	}
+			
+		});
 	
 	});//ready
 </script>
@@ -121,16 +139,16 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 	</thead>
 	<tbody>
       <tr>
-      	<td>${requestScope.pvo.ptitle }</td>
-     	<td>${requestScope.pvo.pdate }</td>
-     	<td>${requestScope.pvo.mid }</td>
-      	<td>${requestScope.pvo.phit }</td>
+      	<td>${pvo.ptitle }</td>
+     	<td>${pvo.pdate }</td>
+     	<td>${pvo.mid }</td>
+      	<td>${pvo.phit }</td>
       </tr>
 	<tr>
 		<td colspan="4">
 			<div class="cycle-slideshow" data-cycle-timeout=2000>
-			<c:forEach items="${requestScope.pvo.pictures }" var="image">
-			<img src="pictures/${image}" width="200" height="150">
+			<c:forEach items="${pvo.pictures }" var="image">
+				<img src="pictures/${image}" width="400" height="300">
 			</c:forEach>
 			</div>
 		</td>
@@ -143,7 +161,7 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 </thead>
 <tbody>
 	<tr>
-      	<td colspan="4">${requestScope.pvo.pcontent }</td>
+      	<td colspan="4">${pvo.pcontent }</td>
 	</tr>
 </tbody>
 
@@ -156,24 +174,24 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
 	<tr>
       	<td colspan="4">
       	<span class="star_rating"> 
-      		<c:forEach begin="1" end="${requestScope.pvo.pstar }">
+      		<c:forEach begin="1" end="${pvo.pstar }">
     			<a href="#" class="on">★</a>
 			</c:forEach>
-			<c:forEach begin="1" end="${5-requestScope.pvo.pstar }">
+			<c:forEach begin="1" end="${5-pvo.pstar }">
     			<a href="#">★</a>
    			</c:forEach>
        </span>
-       &nbsp;${requestScope.pvo.pstar }
+       &nbsp;${pvo.pstar }
        </td>
 	</tr>
 </tbody>
 </table>
 <span style='float:right'>
 	<c:if test="${sessionScope.mvo.mid == requestScope.pvo.mid }">
-		<a href="DispatcherServlet?command=updatepostview&pno=${requestScope.pvo.pno}"><input type="button"  class="btn" value="수정" id="updatepost"></a>
-		<a href="DispatcherServlet?command=deletepost&pno=${requestScope.pvo.pno}"><input type="button"  class="btn" value="삭제" id="deletepost" onclick="return deletecheck()"></a>
+		<a href="DispatcherServlet?command=updatepostview&pno=${pvo.pno}"><input type="button"  class="btn" value="수정" id="updatepost"></a>
+		<a href="DispatcherServlet?command=deletepost&pno=${pvo.pno}"><input type="button"  class="btn" value="삭제" id="deletepost" onclick="return deletecheck()"></a>
 	</c:if>
-<a href="DispatcherServlet?command=sortbyloc&loc=${requestScope.pvo.loc }&sigungu=${requestScope.pvo.sigungu}"><button type="button" id="list" class="btn btn-default">목록</button></a>
+<a href="DispatcherServlet?command=sortbyloc&loc=${pvo.loc }&sigungu=${pvo.sigungu}"><button type="button" id="list" class="btn btn-default">목록</button></a>
 </span>
 <br><br><br>[댓글리스트]
 <table id="commentTable" class="table table-condensed">
@@ -202,26 +220,19 @@ ${sessionScope.loc } > ${sessionScope.sigungu}
         </td>
     </tr>
   </table>
-</div>
 
+</div>
 <div class="col-sm-4">
-<input type="button" class="btn btn-primary"value="좋아요" id="like">
-&nbsp;&nbsp;<span id="plike">${requestScope.pvo.plike}</span>
+<input type="button" class="btn btn-primary" value="좋아요" id="like">
+&nbsp;&nbsp;<span id="plike">${requestScope.pvo.plike} 명</span>
+<br>
+<br><input type="button"class="btn btn-primary" value="관심맛집등록">
 <br><br>
 <b>상세주소</b>&nbsp;&nbsp;${pvo.paddress }<br><br>
 <b>전화번호</b>&nbsp;&nbsp;${pvo.ptel }<br><br>
 <b>운영시간</b>&nbsp;&nbsp;${pvo.ptime }<br><br>
 <b>가격</b>&nbsp;&nbsp;${pvo.pprice }<br><br>
 <b>기타</b>&nbsp;&nbsp;${pvo.petc }<br><br>
-
-<c:if test="${sessionScope.mvo!=null}">
-<form action="DispatcherServlet">
-<input type="hidden" name="command" value="addfavorite">
-<input type="hidden" name="mid" value="${sessionScope.mvo.mid}">
-<input type="hidden" name="pno" value="${requestScope.pvo.pno}">
-	<input type="submit" value="관심맛집등록">
-</form>
-</c:if>
 </div>
 </div>
 

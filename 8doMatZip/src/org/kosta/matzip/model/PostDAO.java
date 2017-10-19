@@ -264,7 +264,26 @@ public class PostDAO {
 		}
 		return updatedpvo;
 	}//update
-	
+	public void updateImage(String pno, ArrayList<String> pictures) throws SQLException {
+		ArrayList<String> pictrues = new ArrayList<String>();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=getConnection();
+			for(int i=0; i<pictrues.size(); i++) {
+			StringBuilder sql=new StringBuilder();	
+			sql.append("UPDATE image ");
+			sql.append("SET ipath=? ");
+			sql.append("WHERE pno=? ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, pictrues.get(i));
+			pstmt.setString(2, pno);
+			pstmt.executeQuery();
+			}
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}
 	public ArrayList<String> findImageByPno(String pno) throws SQLException {
 		ArrayList<String> path = new ArrayList<String>();
 		Connection con=null;
@@ -670,4 +689,72 @@ public class PostDAO {
 			closeAll(pstmt, con);
 		}
 	}//deletefav
+	public ArrayList<String> showTopPostPno() throws SQLException {
+		ArrayList<String> topPlike=new ArrayList<String>();
+		Connection con=null;
+	    PreparedStatement pstmt=null;
+	    ResultSet rs=null;
+	    try {
+	    	con=getConnection();
+	    	StringBuilder sql=new StringBuilder();
+	     	sql.append("select * from(select pno from post order by plike desc) ");
+	     	sql.append("where rownum<=10 ");
+	    	pstmt=con.prepareStatement(sql.toString());
+	    	rs=pstmt.executeQuery();
+	    	while(rs.next()) {
+	    		topPlike.add(rs.getString(1));
+	    	}
+	    }finally {
+	    	closeAll(rs, pstmt, con);
+	    }
+		return topPlike;
+
+		
+	}//showTopPostPno
+	public String searchImage(String ipath) throws SQLException {
+		Connection con=null;
+	    PreparedStatement pstmt=null;
+	    ResultSet rs=null;
+	    String pno=null;
+	    try {
+	    	con=getConnection();
+	    	StringBuilder sql=new StringBuilder();
+	    	sql.append("select pno from imagepath ");
+	    	sql.append("where ipath=? ");
+	    	pstmt=con.prepareStatement(sql.toString());
+	    	pstmt.setString(1, ipath);
+	    	rs=pstmt.executeQuery();
+	    	if(rs.next()) {
+	    		pno=rs.getString(1);
+	    	}
+	    }finally {
+	    	closeAll(rs, pstmt, con);
+	    }
+		return pno;
+		
+	}
+	public ArrayList<String> showTopList() throws SQLException {
+		ArrayList<String> topPlike=new ArrayList<String>();
+		Connection con=null;
+	    PreparedStatement pstmt=null;
+	    ResultSet rs=null;
+	    try {
+	    	con=getConnection();
+	    	StringBuilder sql=new StringBuilder();
+	     	sql.append("select * from(select pno from post order by plike desc) ");
+	     	sql.append("where rownum<=10 ");
+	    	pstmt=con.prepareStatement(sql.toString());
+	    	rs=pstmt.executeQuery();
+	    	while(rs.next()) {
+	    		ArrayList<String> pic=findImageByPno(rs.getString(1));
+	    		topPlike.add(pic.get(0));
+	    		
+	    	}
+	    }finally {
+	    	closeAll(rs, pstmt, con);
+	    }
+		return topPlike;
+
+		
+	}
 }//class
