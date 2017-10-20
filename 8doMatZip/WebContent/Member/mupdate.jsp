@@ -12,10 +12,15 @@
 		return false;
 	}
   </script>
+  <style type="text/css">
+.mytable{
+	background: rgba(255, 255, 255, 0.9);
+}
+</style>
 <div class="row">
-<div class="col-sm-12">
+<div class="col-sm-12" style="margin-left: 90px;margin-top: 10px;" align="center">
 <form method="post" action="DispatcherServlet">
-		<table class="table table-bordered ">
+		<table class="table table-bordered mytable" style="width: 500px;height:400px;">
 			<tr>
 				<td>Id</td>
 				<td><input type="text" name="id" required="required" value="${requestScope.mvo.mid}" readonly></td>
@@ -36,19 +41,18 @@
 				<td>Tel</td>
 				<td><input type="text" name="tel" required="required" value="${requestScope.mvo.mtel}"></td>
 			</tr>
-			<tr>
+			<tr align="right">
 				<td colspan="2">
-				<input type="submit" value="수정">
-				
+				<input type="submit" class="btn btn-danger" value="수정">
+				<a href="DispatcherServlet?command=mleave&mid=${requestScope.mvo.mid}"  
+				type="button" class="btn btn-danger" onclick="return recheck()">회원탈퇴</a>
 			</tr>
 			</tbody>
 		</table>
 		<input type="hidden" name="ano" value="1">
 		<input type="hidden" name="command" value="mupdate">
 	</form>
-	</div>
+	
 	</div>
 	<br>
-	<a href="DispatcherServlet?command=mleave&mid=${requestScope.mvo.mid}"  type="button" class="btn btn-default" onclick="return recheck()">회원탈퇴</a>
-	<br><br>
-	<a href="index.jsp">Home</a>
+	</div>

@@ -7,6 +7,9 @@
 	function checkConfirm() {
 		return confirm("수정 하시겠습니까?");
 	}
+	function goback(){
+		history.go(-1);
+	}
  $(document).ready(function() {
 	 $(".star_rating a").removeClass("on");
 	 $( ".star_rating a" ).click(function() {
@@ -37,8 +40,8 @@
 .star_rating a:first-child {margin-left:0;}
 .star_rating a.on {color:#ffcc00;}
 </style>
-<div class="panel panel-default" style="padding: 30px;">
-  <div class="panel-body" style="padding: 15px;"><font size="15px">리뷰작성</font></div>
+<div class="panel panel-default" style="padding: 30px;margin-left: 130px; margin-top: 10px;">
+  <div class="panel-body" style="padding: 15px;"><font size="12px">맛집 리뷰 수정</font></div>
 <div align="left" class="form-group" >
 <form action="DispatcherServlet" method="post" enctype="multipart/form-data" onsubmit="return checkConfirm()">
 <input type="hidden" name="command" value="updatepost">
@@ -211,7 +214,10 @@ $('document').ready(function() {
 상세 주소:<input type="text" name="address" value="${requestScope.updatepvo.paddress }"><br>
 특이사항:<input type="text" name="etc" value="${requestScope.updatepvo.petc }"><br>
 <br>
-<div align="right"><input type="submit" class="btn btn-danger" value="수정 하기"></div>
+<div align="right">
+<input type="submit" class="btn btn-danger" value="수정 하기">
+<input type="button" class="btn btn-danger" value="취소" onclick="return goback()">
+</div>
 </form>
 </div>
 </div>

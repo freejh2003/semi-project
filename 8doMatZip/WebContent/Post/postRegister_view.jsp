@@ -80,8 +80,10 @@ $('document').ready(function() {
 	 $( ".star_rating a" ).click(function() {
 	     $(this).addClass("on").prevAll("a").addClass("on");
 	     var star = $(this).prevAll("a").length+1;
+	    
 	     $("#pstar").text(star);
 	     $("#pstarhidden").val(star);
+	    
 	     $( ".star_rating a" ).click(function() {
 	     	if(($(this).prevAll("a").length+1)<star){
 	     		$(".star_rating a").removeClass("on");    	
@@ -106,8 +108,8 @@ $('document').ready(function() {
 .star_rating a.on {color:#ffcc00;}
 </style>
 
-<div class="panel panel-default" style="padding: 30px;">
-  <div class="panel-body" style="padding: 15px;"><font size="15px">맛집 리뷰 작성</font></div>
+<div class="panel panel-default" style="padding: 30px;margin-left: 130px; margin-top: 10px;">
+  <div class="panel-body" style="padding: 15px;"><font size="12px">맛집 리뷰 작성</font></div>
 <div align="left" class="form-group" >
 <form action="DispatcherServlet" name="form" method="post" class="form-horizontal" onsubmit="return checkConfirm()" enctype="multipart/form-data">
 <input type="hidden" name="mid" value="${sessionScope.mvo.mid}">

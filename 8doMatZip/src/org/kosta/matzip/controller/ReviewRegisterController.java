@@ -95,7 +95,7 @@ public class ReviewRegisterController implements Controller {
         locsession.setAttribute("loc",loc);
         locsession.setAttribute("sigungu",sigungu);
         PostVO pvo=new PostVO(pno,ptitle, pcontent,pstar,plike,paddress, ptime, ptel, pprice, petc,phit,loc,sigungu, mid);
-        PostVO updatedpvo = PostDAO.getInstance().updatePost(pvo);
+        PostDAO.getInstance().updatePost(pvo);
         	// 이미지 찾아서 변경하는 부분
         ArrayList<String> pictures = PostDAO.getInstance().findImageByPno(pno);
         String filename="";
@@ -113,7 +113,6 @@ public class ReviewRegisterController implements Controller {
 		  pictures.set(1, filename2);
 		  PostDAO.getInstance().updateImage(pno, pictures);
 		  return "redirect:Post/postupdate_result1.jsp";
-		  //return "DispatcherServlet?command=postdetail&pno="+updatedpvo.getPno();
 	}
 	}
 }

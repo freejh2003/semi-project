@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<style type="text/css">
+.mytable{
+ background: rgba(255, 255, 255, 0.9);
+}
+</style>
+
 <div class="container">
-<table class="table table-bordered">
+<table class="table table-bordered mytable" style="margin-top: 10px;">
 <thead>
 	<tr>
 		<th>NO</th><th>도</th><th>시.군.구</th><th>제목</th><!-- <th>pcontent</th><th>pstar</th> -->

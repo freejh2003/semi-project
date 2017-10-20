@@ -118,6 +118,7 @@ create table post_myfav(
 	constraint pk_member_post primary key (mid, pno)
 )
 select count(*) from post_myfav where mid='aaaaa';
+select count(*) from post_myfav where mid='aaaaa' and pno='80';
 
 SELECT p.pno, p.ptitle, p.pstar, p.plike, p.phit 
 FROM (select row_number() over(order by pno desc) rnum, pno, ptitle, pstar, plike, phit from post) p, post_myfav pm 

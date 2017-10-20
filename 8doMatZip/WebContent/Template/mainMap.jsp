@@ -121,7 +121,6 @@
       font-size: 20px;
       font-family: NanumGothicB;
    } 
-   
    #context .for{
       float: left;
       width: 23%;
@@ -220,8 +219,8 @@ $(function(){
 </script>
 </head>
 <body>
- <!-- <div class="highlight-line" style="background: #f3f3f3;" >
- -->   <div id="MAP" class="frame">
+<!--  <div class="highlight-line" style="background: #f3f3f3;" >
+ -->  <div id="MAP" class="frame">
       <div id="MAP_title"><em id="icon"></em><span style="color:#DF1E37;font-family: NanumGothicB;">지역별</span> 맛집찾기<span id="submsg">  지도에서 지역을 선택한 후 상세지역명을 선택해주세요.</span></div>
 
       <div id="VIEW" >
@@ -246,8 +245,7 @@ $(function(){
 
       <div>
          <div id="context_title"><span id="from">서울특별시</span> 맛집찾기</div>
-         <div id="context">
-         </div>
+         <div id="context"></div>
       </div>
 
       <div class="clear"></div>
@@ -255,5 +253,5 @@ $(function(){
    
    <div class="clear"></div>
 <!-- </div>
- --> </body>
+ --></body>
 </html>

@@ -45,13 +45,19 @@ $(document).ready(function() {
 	})//keyup
 })//ready
 </script>
+  <style type="text/css">
+.mytable{
+ background: rgba(255, 255, 255, 0.9);
+}
+</style>
 <body>
+<div class="row">
+<div class="col-sm-12" style="margin-left: 90px;margin-top: 10px;" align="center">
    <form method="post" action="DispatcherServlet" id="newRegisterForm" name="registerForm" onsubmit="return checkForm()">
-      <table class="registerTable">
+      <table class="table table-bordered mytable" style="width: 500px;height:400px;">
          <tr>
             <td>아이디</td>
-            <td><input type="text" name="id" id="id" required="required"></td>
-            <td id="checkResult"></td>
+            <td><input type="text" name="id" id="id" required="required"><br><div id="checkResult" style="max-width: 270px;"></div></td>
          </tr>
          <tr>
             <td>패스워드</td>
@@ -82,7 +88,8 @@ $(document).ready(function() {
       <input type="hidden" name="ano" value="1">
       <input type="hidden" name="command" value="idcheck">
    </form>
+</div>
+</div>
    <br>
-   <a href="index.jsp">Home</a>
 </body>
 </html>

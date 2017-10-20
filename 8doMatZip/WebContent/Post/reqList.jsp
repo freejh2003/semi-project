@@ -5,6 +5,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+.mytable{
+ background: rgba(255, 255, 255, 0.9);
+}
+</style>
 <script type="text/javascript">
 	var reqno="";
 	var ajaxval="";
@@ -20,7 +25,7 @@
 			dataType:"json",
 			success:function(data){
 				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html('<textarea class="form-control" name="reqcontent" placeholder="Contents" rows="5" required="required" style="resize: none;">'+data.reqcontent+'</textarea>');
-				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateExecuteBtn" class="btn btn-default" type="button">수정완료</button>');
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateExecuteBtn" class="btn btn-danger" type="button">수정완료</button>');
 			}
 		}); //ajax
 		});//click
@@ -35,7 +40,7 @@
 			dataType:"json",
 			success:function(data){
 				$("#requesttable tr:eq("+ajaxreqno+") td:eq(2)").html(reqcon);
-				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateBtn" class="btn btn-default">수정</button>');
+				$("#requesttable tr:eq("+ajaxreqno+") td:eq(4)").html('<button name="updateBtn" class="btn btn-danger">수정</button>');
 			}
 		});  //ajax
 		});//click2
@@ -43,7 +48,8 @@
 </script>
 
 <c:set value="${requestScope.lv}" var="paging" />
-<table class="table table-bordered" id="requesttable">
+<div style="margin-left: 130px;margin-top: 10px;"  align="center">
+<table class="table table-bordered mytable" id="requesttable">
 <thead>
 	<tr>
 		<th>NO</th><th>작성자</th><th>요청사항</th>
@@ -60,10 +66,10 @@
 							<td>${reqpost.reqcontent }</td>
 							<td>${reqpost.reqdate}</td>
 							<c:if test="${sessionScope.mvo.mid==reqpost.mid}">
-								<td><button type="button" name="updateBtn" class="btn btn-default">수정</button></td>
-								<td><a
+								<td align="center"><button type="button" name="updateBtn" class="btn btn-danger">수정</button></td>
+								<td align="center"><a
 									href="DispatcherServlet?command=requestdelete&reqno=${reqpost.reqno }"
-									type="button" class="btn btn-default">삭제</a></td>
+									type="button" class="btn btn-danger">삭제</a></td>
 							</c:if>
 						</tr>			
 				</c:forEach>
@@ -82,7 +88,7 @@
 <form method="post" action="DispatcherServlet">
 <input type="hidden" value="reqregister" name="command">
 <input type="hidden" value="${sessionScope.mvo.mid}" name="mid">
-<table class="table table-bordered">
+<table class="table table-bordered mytable">
 <thead>
 	<tr>
 		<th></th><th>작성자</th><th colspan="2">요청사항</th>
@@ -95,13 +101,14 @@
 	<td>
 	 <textarea class="form-control" id="comments" name="reqcontent" placeholder="Contents" rows="5" required="required" style="resize:none;"></textarea>
 	</td>
-	<td><input type="submit" value="등록" ></td>
+	<td align="center"><input type="submit" class="btn btn-danger" value="등록" ></td>
 	</tr>
 </tbody>
 </table>
 </form>
 </c:if>
-
+</div>
+<div style="margin-left: 130px;">
 <ul class="pagination justify-content-center">
 		<c:set value="${paging.getPagingbean()}" var="pagingbean" />
 		<c:if test="${pagingbean.isPreviousPageGroup() }">
@@ -127,3 +134,4 @@
 			</li>
 		</c:if>
 	</ul>
+</div>

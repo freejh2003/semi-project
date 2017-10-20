@@ -14,7 +14,6 @@ public class ShowMapController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ArrayList<String> pno=PostDAO.getInstance().showTopPostPno();
 		ArrayList<String> pictures=PostDAO.getInstance().showTopList();
-		System.out.println("pictures:" + pictures);
 		request.setAttribute("Top10_Pictures", pictures);
 		request.setAttribute("pno", pno);
 		request.setAttribute("url_top10", "rightlist.jsp");

@@ -583,6 +583,26 @@ public class PostDAO {
 		}
 		return list;
 	}//myfavview
+	public int SelectMyFavBy(String mid, String pno) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int a=0;
+		try {
+			con=getConnection();
+			String sql="select count(*) from post_myfav where mid=? and pno=?";
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, mid);
+			pstmt.setString(2, pno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=1;
+			}
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return a;
+	}// selectmyfavbyid
 	public ArrayList<PostVO> getAllLocPostList(int start, int end,String loc, String sigungu) throws SQLException{
 		Connection con=null;
 		PreparedStatement pstmt=null;

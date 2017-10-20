@@ -2,10 +2,16 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<style type="text/css">
+.mytable{
+ background: rgba(255, 255, 255, 0.9);
+}
+</style>
 <div class="container">
 ${sessionScope.loc } > ${sessionScope.sigungu} <br>
 <c:set value="${sessionScope.sortlist}" var="locpaging" />
-<table class="table table-bordered">
+
+<table class="table table-bordered mytable">
 <thead>
 	<tr>
 		<th>NO</th><th>제목</th><th>작성일시</th>
